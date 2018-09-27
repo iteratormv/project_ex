@@ -130,13 +130,11 @@ namespace Exhibition.Vew
 				context.TemplateSettings.Remove(del_setting);
 				context.SaveChanges();
 				MessageBox.Show("Конфигурация " + sn + " удалена");
-				setDault();
 				cmb_setting_name.DataSource = context.TemplateSettings.Select(t => t.SettingName).ToList();
 				this.Refresh();
-
-				//нужно удалить дефолт из базы
 				cmb_setting_name.Text = "default";
-
+				current_setting = "default";
+				setDefault();
 			}
 			else MessageBox.Show("Данная конфигурация не может быть удалена");
 		}
@@ -144,16 +142,16 @@ namespace Exhibition.Vew
 		private void btn_set_setting_Click(object sender, EventArgs e)
 		{
 			current_setting = cmb_setting_name.Text;
-			setDault();
+			setDefault();
 		}
 
-		private void setDault()
+		private void setDefault()
 		{
 			var default_setting = context.TemplateSettings.
 			Where(t => t.SettingName == "default").FirstOrDefault();
 			context.TemplateSettings.Remove(default_setting);
 			context.SaveChanges();
-			default_setting.CyrrentSetting = "default";
+			default_setting.CyrrentSetting = current_setting;
 			context.TemplateSettings.Add(default_setting);
 			context.SaveChanges();
 		}
