@@ -21,7 +21,7 @@
 		// о настройке и использовании модели Code First см. в статье http://go.microsoft.com/fwlink/?LinkId=390109.
 
 		// public virtual DbSet<MyEntity> MyEntities { get; set; }
-
+		public virtual DbSet<CurrentSetting> CurrentSettings { get; set; }
 		public virtual DbSet<TemplateSetting> TemplateSettings { get; set; }
 	}
 

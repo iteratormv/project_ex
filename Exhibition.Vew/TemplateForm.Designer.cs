@@ -48,7 +48,7 @@
 			// 
 			this.btn_save_setting.Location = new System.Drawing.Point(46, 266);
 			this.btn_save_setting.Name = "btn_save_setting";
-			this.btn_save_setting.Size = new System.Drawing.Size(265, 23);
+			this.btn_save_setting.Size = new System.Drawing.Size(380, 23);
 			this.btn_save_setting.TabIndex = 0;
 			this.btn_save_setting.Text = "сохранить конфигурацию";
 			this.btn_save_setting.UseVisualStyleBackColor = true;
@@ -69,15 +69,16 @@
 			this.cmb_font_firstname.FormattingEnabled = true;
 			this.cmb_font_firstname.Location = new System.Drawing.Point(190, 69);
 			this.cmb_font_firstname.Name = "cmb_font_firstname";
-			this.cmb_font_firstname.Size = new System.Drawing.Size(121, 21);
+			this.cmb_font_firstname.Size = new System.Drawing.Size(236, 21);
 			this.cmb_font_firstname.TabIndex = 3;
+			this.cmb_font_firstname.Click += new System.EventHandler(this.cmb_font_firstname_Click);
 			// 
 			// cmb_setting_name
 			// 
 			this.cmb_setting_name.FormattingEnabled = true;
 			this.cmb_setting_name.Location = new System.Drawing.Point(46, 27);
 			this.cmb_setting_name.Name = "cmb_setting_name";
-			this.cmb_setting_name.Size = new System.Drawing.Size(265, 21);
+			this.cmb_setting_name.Size = new System.Drawing.Size(380, 21);
 			this.cmb_setting_name.TabIndex = 4;
 			this.cmb_setting_name.DropDownClosed += new System.EventHandler(this.cmb_setting_name_DropDownClosed);
 			// 
@@ -86,8 +87,9 @@
 			this.cmb_font_lastname.FormattingEnabled = true;
 			this.cmb_font_lastname.Location = new System.Drawing.Point(190, 106);
 			this.cmb_font_lastname.Name = "cmb_font_lastname";
-			this.cmb_font_lastname.Size = new System.Drawing.Size(121, 21);
+			this.cmb_font_lastname.Size = new System.Drawing.Size(236, 21);
 			this.cmb_font_lastname.TabIndex = 6;
+			this.cmb_font_lastname.Click += new System.EventHandler(this.cmb_font_lastname_Click);
 			// 
 			// cb_lasname
 			// 
@@ -104,8 +106,9 @@
 			this.cmb_font_pathronim.FormattingEnabled = true;
 			this.cmb_font_pathronim.Location = new System.Drawing.Point(190, 143);
 			this.cmb_font_pathronim.Name = "cmb_font_pathronim";
-			this.cmb_font_pathronim.Size = new System.Drawing.Size(121, 21);
+			this.cmb_font_pathronim.Size = new System.Drawing.Size(236, 21);
 			this.cmb_font_pathronim.TabIndex = 8;
+			this.cmb_font_pathronim.Click += new System.EventHandler(this.cmb_font_pathronim_Click);
 			// 
 			// cb_patronim
 			// 
@@ -122,8 +125,9 @@
 			this.cmb_font_company.FormattingEnabled = true;
 			this.cmb_font_company.Location = new System.Drawing.Point(190, 181);
 			this.cmb_font_company.Name = "cmb_font_company";
-			this.cmb_font_company.Size = new System.Drawing.Size(121, 21);
+			this.cmb_font_company.Size = new System.Drawing.Size(236, 21);
 			this.cmb_font_company.TabIndex = 10;
+			this.cmb_font_company.Click += new System.EventHandler(this.cmb_font_company_Click);
 			// 
 			// cb_company
 			// 
@@ -140,8 +144,9 @@
 			this.cmb_font_position.FormattingEnabled = true;
 			this.cmb_font_position.Location = new System.Drawing.Point(190, 218);
 			this.cmb_font_position.Name = "cmb_font_position";
-			this.cmb_font_position.Size = new System.Drawing.Size(121, 21);
+			this.cmb_font_position.Size = new System.Drawing.Size(236, 21);
 			this.cmb_font_position.TabIndex = 12;
+			this.cmb_font_position.Click += new System.EventHandler(this.cmb_font_position_Click);
 			// 
 			// cb_position
 			// 
@@ -157,7 +162,7 @@
 			// 
 			this.btn_del_setting.Location = new System.Drawing.Point(46, 310);
 			this.btn_del_setting.Name = "btn_del_setting";
-			this.btn_del_setting.Size = new System.Drawing.Size(265, 23);
+			this.btn_del_setting.Size = new System.Drawing.Size(380, 23);
 			this.btn_del_setting.TabIndex = 13;
 			this.btn_del_setting.Text = "удалить конфигурацию";
 			this.btn_del_setting.UseVisualStyleBackColor = true;
@@ -167,7 +172,7 @@
 			// 
 			this.btn_set_setting.Location = new System.Drawing.Point(46, 356);
 			this.btn_set_setting.Name = "btn_set_setting";
-			this.btn_set_setting.Size = new System.Drawing.Size(265, 23);
+			this.btn_set_setting.Size = new System.Drawing.Size(380, 23);
 			this.btn_set_setting.TabIndex = 14;
 			this.btn_set_setting.Text = "применить конфигурацию";
 			this.btn_set_setting.UseVisualStyleBackColor = true;
@@ -177,7 +182,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(362, 408);
+			this.ClientSize = new System.Drawing.Size(469, 408);
 			this.Controls.Add(this.btn_set_setting);
 			this.Controls.Add(this.btn_del_setting);
 			this.Controls.Add(this.cmb_font_position);

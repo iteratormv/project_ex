@@ -13,15 +13,18 @@ namespace Exhibition.Data.DataModel
 		[MaxLength(200)]
 		[Display(Name = "Вы являетесь")]
 		public string Name { get; set; }
+		public string Color { get; set; }
 
 		public Description()
 		{
 			Name = "";
+			Color = "";
 		}
 
-		public Description(string name)
+		public Description(string name, string color)
 		{
 			Name = name;
+			Color = color;
 		}
 
 		public virtual List<ExhibitionVisitor> ExhibitionVisitors { get; set; }

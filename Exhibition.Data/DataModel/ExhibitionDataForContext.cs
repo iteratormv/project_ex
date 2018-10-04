@@ -17,6 +17,10 @@
 		{
 		}
 
+		// Добавьте DbSet для каждого типа сущности, который требуется включить в модель. Дополнительные сведения 
+		// о настройке и использовании модели Code First см. в статье http://go.microsoft.com/fwlink/?LinkId=390109.
+
+		// public virtual DbSet<MyEntity> MyEntities { get; set; }
 		public DbSet<ExhibitionVisitor> ExhibitionVisitors { get; set; }
 		public DbSet<City> Cities { get; set; }
 		public DbSet<Company> Companies { get; set; }
@@ -24,11 +28,6 @@
 		public DbSet<Description> Descriptions { get; set; }
 		public DbSet<Exhibit> Exhibits { get; set; }
 		public DbSet<Raport> Raports { get; set; }
-
-		// Добавьте DbSet для каждого типа сущности, который требуется включить в модель. Дополнительные сведения 
-		// о настройке и использовании модели Code First см. в статье http://go.microsoft.com/fwlink/?LinkId=390109.
-
-		// public virtual DbSet<MyEntity> MyEntities { get; set; }
 	}
 
 	//public class MyEntity

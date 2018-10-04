@@ -136,7 +136,7 @@ namespace Exhibition.Data
 					if (e_discription.Length == 0 || e_discription == " ") e_discription = "none";
 					if (context.Descriptions.Where(d => d.Name.Equals(e_discription)).Count() == 0)
 					{
-						context.Descriptions.Add(new Description(e_discription));
+						context.Descriptions.Add(new Description(e_discription, "White"));
 					}
 
 					if (context.Cities.Where(c => c.Name.Equals("none")).Count() == 0)
@@ -191,7 +191,7 @@ namespace Exhibition.Data
 				context.Database.Delete();
 				context.Companies.Add(new Company("none"));
 				context.Positions.Add(new Position("none"));
-				context.Descriptions.Add(new Description("none"));
+				context.Descriptions.Add(new Description("none", "none"));
 				context.Cities.Add(new City("none"));
 				context.Exhibits.Add(new Exhibit("none"));
 				context.Raports.Add(new Raport("none"));
@@ -217,6 +217,8 @@ namespace Exhibition.Data
 					(e => e.Name.Equals("none")).Select(ex => ex.Id).FirstOrDefault();
 				visitor.RaportId = context.Raports.Where(r => r.Name.Equals("none"))
 					.Select(ra => ra.Id).FirstOrDefault();
+
+				visitor.Status = "registred";
 
 				context.ExhibitionVisitors.Add(visitor);
 				context.SaveChanges();

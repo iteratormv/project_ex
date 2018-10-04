@@ -1,4 +1,5 @@
-﻿using Exhibition.Data.SettingModel;
+﻿using Exhibition.Data.BizLayer;
+using Exhibition.Data.SettingModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,51 +16,20 @@ namespace Exhibition.Vew
 	public partial class TemplateForm : Form
 	{
 		ExhibitionSettingContext context = new ExhibitionSettingContext();
-		BindingSource bs = new BindingSource();
-		string current_setting { get; set; }
+		SettingStorage tss; 
 
-		public TemplateForm()
+		public TemplateForm(SettingStorage ss)
 		{
 			InitializeComponent();
-			if (context.TemplateSettings.Select(c => c).ToList().Count() == 0)
-			{
-				InitDefaultSetting();
-			}
-			var collection = context.TemplateSettings.Select(t => t.SettingName).ToList();
-			cmb_setting_name.DataSource = collection;
-			current_setting = context.TemplateSettings
-				.Where(q=>q.isCanDelete == false).Select(d=>d.CyrrentSetting).FirstOrDefault();
-		//	current_setting = "default";
+			tss = ss;
 		}
 
 		private void TemplateForm_Load(object sender, EventArgs e)
 		{
-			this.displayInfo(current_setting);
+			this.displayInfo(tss.getCSName());
 		}
 
-		private void InitDefaultSetting()
-		{
-			var defaultSetting = new TemplateSetting();
-
-			defaultSetting.isCanDelete = false;
-			defaultSetting.isFNvisible = true;
-			defaultSetting.isLNvisible = true;
-			defaultSetting.isPAvisible = true;
-			defaultSetting.isCOvisible = true;
-			defaultSetting.isPOvisible = true;
-			defaultSetting.FontFN = "Arial 10";
-			defaultSetting.FontLN = "Arial 10";
-			defaultSetting.FontPA = "Arial 10";
-			defaultSetting.FontCO = "Arial 5";
-			defaultSetting.FontPO = "Arial 5";
-			defaultSetting.SettingName = "default";
-			defaultSetting.CyrrentSetting = "default";
-
-			context.TemplateSettings.Add(defaultSetting);
-			context.SaveChanges();
-		}
-
-		private void SaveSetting(string name)
+		private TemplateSetting createSetting()
 		{
 			var setting = new TemplateSetting();
 
@@ -74,86 +44,127 @@ namespace Exhibition.Vew
 			setting.FontPA = cmb_font_pathronim.Text;
 			setting.FontCO = cmb_font_company.Text;
 			setting.FontPO = cmb_font_position.Text;
-			setting.SettingName = name;
+			setting.SettingName = cmb_setting_name.Text;
 
-			context.TemplateSettings.Add(setting);
-			context.SaveChanges();
-			current_setting = name;
+			return setting;
 		}
 
-		private void displayInfo(string name)
+		private void SaveSetting()
 		{
-			var setting = context.TemplateSettings.Where(s => s.SettingName == name).FirstOrDefault();
-			var allSettings = context.TemplateSettings.Select(s => s.SettingName).ToList();
-			cmb_setting_name.DataSource = allSettings;
-			cmb_setting_name.Text = setting.SettingName;
-			cmb_font_firstname.Text = setting.FontFN;
-			cmb_font_lastname.Text = setting.FontLN;
-			cmb_font_pathronim.Text = setting.FontPA;
-			cmb_font_company.Text = setting.FontCO;
-			cmb_font_position.Text = setting.FontPO;
-			cb_firstname.Checked = setting.isFNvisible;
-			cb_lasname.Checked = setting.isLNvisible;
-			cb_patronim.Checked = setting.isPAvisible;
-			cb_company.Checked = setting.isCOvisible;
-			cb_position.Checked = setting.isPOvisible;
+			tss.addSettingToStorage(createSetting());
+		}
+
+		private void displayInfo(string currentSettingName)
+		{
+			var currentSetting = tss.lts.Where(cc => cc.SettingName == currentSettingName).FirstOrDefault();
+			var settings = tss.lts;
+
+			cmb_setting_name.DataSource = settings.Select(s=>s.SettingName).ToList();
+			cmb_setting_name.Text = currentSettingName;
+			cmb_font_firstname.Text = currentSetting.FontFN;
+			cmb_font_lastname.Text = currentSetting.FontLN;
+			cmb_font_pathronim.Text = currentSetting.FontPA;
+			cmb_font_company.Text = currentSetting.FontCO;
+			cmb_font_position.Text = currentSetting.FontPO;
+			cb_firstname.Checked = currentSetting.isFNvisible;
+			cb_lasname.Checked = currentSetting.isLNvisible;
+			cb_patronim.Checked = currentSetting.isPAvisible;
+			cb_company.Checked = currentSetting.isCOvisible;
+			cb_position.Checked = currentSetting.isPOvisible;
 		}
 
 		private void btn_save_setting_Click(object sender, EventArgs e)
 		{
 			string s_name = cmb_setting_name.Text;
-			if (context.TemplateSettings.Where(t => t.SettingName == s_name).Count() == 0)
+
+			if (tss.lts.Where(s=>s.SettingName == s_name).Count() == 0)
 			{
-				this.SaveSetting(s_name);
+				this.SaveSetting();
 				MessageBox.Show("Конфигурация " + s_name +  " сохранена");
-				cmb_setting_name.DataSource = context.TemplateSettings.Select(t=>t.SettingName).ToList();
-     			this.Refresh();
+				cmb_setting_name.DataSource = tss.lts.Select(s => s.SettingName).ToList();
+				this.Refresh();
 				cmb_setting_name.Text = s_name;
 			}
-			else MessageBox.Show("Такое имя конфигурации уже существует");
-		}
-
-		private void cmb_setting_name_DropDownClosed(object sender, EventArgs e)
-		{
-			var cs = cmb_setting_name.SelectedValue.ToString();
-			displayInfo(cs);
-			current_setting = cs;			
+			else MessageBox.Show("Такое имя конфигурации уже существует");;
 		}
 
 		private void btn_del_setting_Click(object sender, EventArgs e)
 		{
 			var sn = cmb_setting_name.Text;
-			var del_setting = context.TemplateSettings.Where(s => s.SettingName == sn).FirstOrDefault();
+			var del_setting = tss.lts.Where(s=>s.SettingName == sn).FirstOrDefault();
 
 			if (del_setting.isCanDelete)
 			{
-				context.TemplateSettings.Remove(del_setting);
-				context.SaveChanges();
+				tss.delSettingFromStorage(del_setting);
 				MessageBox.Show("Конфигурация " + sn + " удалена");
-				cmb_setting_name.DataSource = context.TemplateSettings.Select(t => t.SettingName).ToList();
+				cmb_setting_name.DataSource = tss.lts.Select(s=>s.SettingName).ToList();
 				this.Refresh();
 				cmb_setting_name.Text = "default";
-				current_setting = "default";
-				setDefault();
+				tss.setCS("default");
 			}
 			else MessageBox.Show("Данная конфигурация не может быть удалена");
 		}
 
 		private void btn_set_setting_Click(object sender, EventArgs e)
 		{
-			current_setting = cmb_setting_name.Text;
-			setDefault();
+			var ss = cmb_setting_name.Text;
+			tss.setCS(ss);
 		}
 
-		private void setDefault()
+		private void cmb_setting_name_DropDownClosed(object sender, EventArgs e)
 		{
-			var default_setting = context.TemplateSettings.
-			Where(t => t.SettingName == "default").FirstOrDefault();
-			context.TemplateSettings.Remove(default_setting);
-			context.SaveChanges();
-			default_setting.CyrrentSetting = current_setting;
-			context.TemplateSettings.Add(default_setting);
-			context.SaveChanges();
+			var cs = cmb_setting_name.SelectedValue.ToString();
+			displayInfo(cs);
 		}
+
+		private void cmb_font_firstname_Click(object sender, EventArgs e)
+		{
+			FontDialog fd = new FontDialog();
+			var result = fd.ShowDialog();
+			if (result == DialogResult.OK)
+			{
+				cmb_font_firstname.Text = fd.Font.Name + " " + fd.Font.Size + " " + fd.Font.Style;
+			}
 		}
+
+		private void cmb_font_lastname_Click(object sender, EventArgs e)
+		{
+			FontDialog fd = new FontDialog();
+			var result = fd.ShowDialog();
+			if (result == DialogResult.OK)
+			{
+				cmb_font_lastname.Text = fd.Font.Name + " " + fd.Font.Size + " " + fd.Font.Style;
+			}
+		}
+
+		private void cmb_font_pathronim_Click(object sender, EventArgs e)
+		{
+			FontDialog fd = new FontDialog();
+			var result = fd.ShowDialog();
+			if (result == DialogResult.OK)
+			{
+				cmb_font_pathronim.Text = fd.Font.Name + " " + fd.Font.Size + " " + fd.Font.Style;
+			}
+		}
+
+		private void cmb_font_company_Click(object sender, EventArgs e)
+		{
+			FontDialog fd = new FontDialog();
+			var result = fd.ShowDialog();
+			if (result == DialogResult.OK)
+			{
+				cmb_font_company.Text = fd.Font.Name + " " + fd.Font.Size + " " + fd.Font.Style;
+			}
+		}
+
+		private void cmb_font_position_Click(object sender, EventArgs e)
+		{
+			FontDialog fd = new FontDialog();
+			var result = fd.ShowDialog();
+			if (result == DialogResult.OK)
+			{
+				cmb_font_position.Text = fd.Font.Name + " " + fd.Font.Size + " " + fd.Font.Style;
+			}
+		}
+	}
 }

@@ -1,5 +1,7 @@
 ﻿using Exhibition.Data;
+using Exhibition.Data.BizLayer;
 using Exhibition.Data.DataModel;
+using Exhibition.Data.SettingModel;
 using Exhibition.Vew;
 using System;
 using System.Collections.Generic;
@@ -8,31 +10,33 @@ using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Windows.Forms;
-//using Microsoft.Office.Interop.Excel;
 
 namespace Exhibition.View
 {
 	public partial class GeneralForm : Form
 	{
-		string n = "n";
 		ExhibitionVisitor select_visitor { get; set; }
 		bool isSelectAndPrint = false;
 		ExelData data;
 		ExhibitionDataForContext context = new ExhibitionDataForContext();
+		ExhibitionSettingContext sett_context = new ExhibitionSettingContext();
 		BindingSource bs = new BindingSource();
-
-
+		SettingStorage ss { get; set; }
+		TemplateForm templForm;
 
 		public GeneralForm()
 		{
 			select_visitor = new ExhibitionVisitor();
 			InitializeComponent();
 			initialDataGread();
+			ss = new SettingStorage();
+			templForm = new TemplateForm(ss);
 		}
 
 		private void initialDataGread()
 		{
-			var dgv_collection = context.ExhibitionVisitors.Where(e => e.Status == "fact").ToList();
+			List<ExhibitionVisitor> dgv_collection = null;
+			if(context.ExhibitionVisitors.Select(s=>s).Count()!=0) dgv_collection = context.ExhibitionVisitors.Where(e => e.Status == "fact").ToList();
 			bs.DataSource = dgv_collection;
 			dgv_fakt_visitor.DataSource = bs;
 		}
@@ -42,7 +46,6 @@ namespace Exhibition.View
 			FormPlanedVisitors pvform = new FormPlanedVisitors();
 			pvform.ShowDialog();
 		}
-
 
 		private void загрузкаФайлаToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -59,7 +62,6 @@ namespace Exhibition.View
 			data.getForDataToDatabase();
 
 		}
-
 
 		private void cb_code_TextChanged(object sender, EventArgs e)
 		{
@@ -112,10 +114,10 @@ namespace Exhibition.View
 
 		private void addVisitorToFact(ExhibitionVisitor select_visitor)
 		{
-			//select_visitor.Status = "fact";
-			//bs.Add(select_visitor);
-			//context.SaveChanges();
-			//printVisitor();
+			select_visitor.Status = "fact";
+			bs.Add(select_visitor);
+			context.SaveChanges();
+			printVisitor();
 		}
 
 		private void GeneralForm_Load(object sender, EventArgs e)
@@ -131,66 +133,121 @@ namespace Exhibition.View
 
 		private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
 		{
-
-			
-
-			//double width, height;
-			//Font font_name, font_company, font_position;
-			//int posXlname, posXfname, posYlname, posYfmane, posXcompany, posYcompany, posXposition, posYposition;
-			//int numberWlastname, numberWfirstname, numberWcurrentcompany, numberWcurrentposition;
-			//bool isOneStringName = true, isOneStringCompany = true, isOneStringPosition = true;
-
-			//const double numberWname = 15;
-			//const double numberWcompany = 27, numberWposition = 27;
-
-			//height = e.PageBounds.Height;
-			//width = e.PageBounds.Width;
-
-			//font_name = (int)(width / numberWname);
-			//font_company = (int)(width / numberWcompany);
-			//font_position = (int)(width / numberWposition);
-
-			//posYlname = (int)(height / 8);
-			//posYcompany = (int)(height / 3);
-			//posYposition = (int)(height / 2);
-
-			//numberWlastname = select_visitor.LastName.Length;
-			//numberWfirstname = select_visitor.FirstName.Length;
-			//numberWcurrentcompany = select_visitor.Company.ToString().Length;
-			//numberWcurrentposition = select_visitor.Position.ToString().Length;
+			double width, height;
+			string[] font_fnames, font_lnames, font_patronims, font_companys, font_positions;
+			string current_setting_name = sett_context.CurrentSettings.FirstOrDefault().CSName;
+			int posYlname, posYcompany, posYposition;//, posYfmane, posYpathronim;
 
 
+			height = e.PageBounds.Height;
+			width = e.PageBounds.Width;
 
+			font_fnames = sett_context.TemplateSettings.
+				Where(f=>f.SettingName == current_setting_name).
+				Select(s=>s.FontFN).FirstOrDefault().ToString().Split(' ');
+			font_lnames = sett_context.TemplateSettings.
+				Where(f => f.SettingName == current_setting_name).
+				Select(s => s.FontLN).FirstOrDefault().Split(' ');
+			font_patronims = sett_context.TemplateSettings.
+				Where(f => f.SettingName == current_setting_name).
+				Select(s => s.FontPA).FirstOrDefault().Split(' ');
+			font_companys = sett_context.TemplateSettings.
+				Where(f => f.SettingName == current_setting_name).
+				Select(s => s.FontCO).FirstOrDefault().Split(' ');
+			font_positions = sett_context.TemplateSettings.
+				Where(f => f.SettingName == current_setting_name).
+				Select(s => s.FontPO).FirstOrDefault().Split(' ');
 
+			posYlname = (int)(height / 8);
+			posYcompany = (int)(height / 3);
+			posYposition = (int)(height / 2);
 
+			string print_name = "";
+			if (ss.lts.Where(s => s.SettingName == current_setting_name)
+				.Select(c => c.isLNvisible).FirstOrDefault()) print_name += select_visitor.LastName + " ";
+			if (ss.lts.Where(s => s.SettingName == current_setting_name)
+				.Select(c => c.isFNvisible).FirstOrDefault()) print_name += select_visitor.FirstName + " ";
+			if (ss.lts.Where(s => s.SettingName == current_setting_name)
+				.Select(c => c.isPAvisible).FirstOrDefault()) print_name += select_visitor.Pathronim;
+
+			if (print_name != "")
+			{
+				string[] print_names = print_name.Split(' ');
+				FontFamily nff = new FontFamily(font_fnames[0]);
+				FontStyle nfs = (FontStyle)int.Parse("2");
+				Font nfont = new Font(nff, float.Parse(font_fnames[1]), nfs);
+				var list_name = validateStrings(nfont, (int)width, print_name);
+				for (int i = 0; i < list_name.Count(); i++)
+				{
+					displayString(nfont, (int)width, posYlname + i * (int)float.Parse(font_fnames[1]) * 15 / 10, list_name[i], e);
+				}
+			}
+
+			if (ss.lts.Where(s => s.SettingName == current_setting_name)
+				.Select(c => c.isCOvisible).FirstOrDefault())
+			{
+				if (select_visitor.CompanyId!=1)
+				{
+					string print_company = context.Companies.Where(v=>v.Id == select_visitor.CompanyId).Select(v=>v.Name).FirstOrDefault();
+					string[] print_companys = print_company.Split(' ');
+					FontFamily cff = new FontFamily(font_companys[0]);
+					FontStyle сfs = (FontStyle)int.Parse("2");
+					Font сfont = new Font(cff, float.Parse(font_companys[1]), сfs);
+					var list_company = validateStrings(сfont, (int)width, print_company);
+					for (int i = 0; i < list_company.Count(); i++)
+					{
+						displayString(сfont, (int)width, posYcompany + i * (int)float.Parse(font_companys[1]) * 15 / 10, list_company[i], e);
+					}
+				}
+			}
+
+			if (ss.lts.Where(s => s.SettingName == current_setting_name)
+				.Select(c => c.isPOvisible).FirstOrDefault())
+			{
+				if (select_visitor.PositionId != 1)
+				{
+					string print_position = context.Positions.Where(p=>p.Id == select_visitor.PositionId).Select(p=>p.Name).FirstOrDefault();
+					string[] print_positions = print_position.Split(' ');
+					FontFamily pff = new FontFamily(font_positions[0]);
+					FontStyle pfs = (FontStyle)int.Parse("2");
+					Font pfont = new Font(pff, float.Parse(font_positions[1]), pfs);
+					var list_position = validateStrings(pfont, (int)width, print_position);
+					for (int i = 0; i < list_position.Count(); i++)
+					{
+						displayString(pfont, (int)width, posYposition + i * (int)float.Parse(font_positions[1]) * 15 / 10, list_position[i], e);
+					}
+				}
+			}
 		}
 
 		private List<string> validateStrings(Font font, int width, string inputString)
 		{
-			List<string> validateStrings = new List<string>();
+			List<string> valStrings = new List<string>();
 			string validateString = "";
-			int maxNumberLetter = width / font.Height;
+			int maxNumberLetter =(int)( width / font.Size * 1.2);
 			string[] words = inputString.Split(' ');
 			for (int i = 0; i < words.Length; i++)
 			{
 				if (validateString.Length + words[i].Length < maxNumberLetter - 2)
 				{
-					validateString += words[i];
+					validateString += (" " + words[i]);
 				}
 				else
 				{
-					validateStrings.Add(validateString);
+					valStrings.Add(validateString);
 					validateString = words[i];
 				}
 			}
-			return validateStrings;
+			valStrings.Add(validateString);
+			return valStrings;
 		}
 
 		private void displayString(Font font, int width, int posY, string inputString, PrintPageEventArgs e)
 		{
-			int maxNumberLetter = width / font.Height;
-			int posX = (maxNumberLetter - inputString.Length) / 2;
-			e.Graphics.DrawString(inputString, font, Brushes.Black, posX, posY);
+			string s = inputString.Trim();
+			int maxNumberLetter =(int)(width / font.Size * 1.2);
+			int posX = (int)(font.Size/1.2*(maxNumberLetter - s.Length) / 2);
+			e.Graphics.DrawString(s, font, Brushes.Black, posX, posY);
 		}
 
 		private void fontDialog1_Apply(object sender, EventArgs e)
@@ -200,7 +257,7 @@ namespace Exhibition.View
 
 		private void настройкаШаблонаПечатиToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			TemplateForm templForm = new TemplateForm();
+			TemplateForm templForm = new TemplateForm(ss);
 			templForm.ShowDialog();
 		}
 	}
