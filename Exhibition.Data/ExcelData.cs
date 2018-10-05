@@ -176,9 +176,11 @@ namespace Exhibition.Data
 					visitor.DescriptionId = context.Descriptions.Where
 						(d => d.Name.Equals(e_discription)).Select(dd => dd.Id).FirstOrDefault();
 					visitor.BarCode = data[row, 7];
+					visitor.Status = "registered";
 
 					context.ExhibitionVisitors.Add(visitor);
 					context.SaveChanges();
+
 				}
 			}
 			status = "get excel data to database";
@@ -218,7 +220,7 @@ namespace Exhibition.Data
 				visitor.RaportId = context.Raports.Where(r => r.Name.Equals("none"))
 					.Select(ra => ra.Id).FirstOrDefault();
 
-				visitor.Status = "registred";
+				visitor.Status = "none";
 
 				context.ExhibitionVisitors.Add(visitor);
 				context.SaveChanges();

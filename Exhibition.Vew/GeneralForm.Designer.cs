@@ -36,6 +36,7 @@
 			this.mi_planed_visitors = new System.Windows.Forms.ToolStripMenuItem();
 			this.mi_fact_visitors = new System.Windows.Forms.ToolStripMenuItem();
 			this.загрузкаФайлаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.настройкаШаблонаПечатиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.lbl_code = new System.Windows.Forms.Label();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.lbl_staus = new System.Windows.Forms.Label();
@@ -44,10 +45,12 @@
 			this.printDocument1 = new System.Drawing.Printing.PrintDocument();
 			this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
 			this.fontDialog1 = new System.Windows.Forms.FontDialog();
-			this.настройкаШаблонаПечатиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+			this.настройкаЦветаБейджаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.pb_color = new System.Windows.Forms.PictureBox();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgv_fakt_visitor)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pb_color)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -67,7 +70,8 @@
             this.mi_planed_visitors,
             this.mi_fact_visitors,
             this.загрузкаФайлаToolStripMenuItem,
-            this.настройкаШаблонаПечатиToolStripMenuItem});
+            this.настройкаШаблонаПечатиToolStripMenuItem,
+            this.настройкаЦветаБейджаToolStripMenuItem});
 			this.выставкаToolStripMenuItem.Name = "выставкаToolStripMenuItem";
 			this.выставкаToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
 			this.выставкаToolStripMenuItem.Text = "Выставка";
@@ -75,28 +79,35 @@
 			// mi_desktop
 			// 
 			this.mi_desktop.Name = "mi_desktop";
-			this.mi_desktop.Size = new System.Drawing.Size(219, 22);
+			this.mi_desktop.Size = new System.Drawing.Size(228, 22);
 			this.mi_desktop.Text = "Рабочий стол";
 			// 
 			// mi_planed_visitors
 			// 
 			this.mi_planed_visitors.Name = "mi_planed_visitors";
-			this.mi_planed_visitors.Size = new System.Drawing.Size(219, 22);
+			this.mi_planed_visitors.Size = new System.Drawing.Size(228, 22);
 			this.mi_planed_visitors.Text = "Планируемые посетители";
 			this.mi_planed_visitors.Click += new System.EventHandler(this.mi_planed_visitors_Click);
 			// 
 			// mi_fact_visitors
 			// 
 			this.mi_fact_visitors.Name = "mi_fact_visitors";
-			this.mi_fact_visitors.Size = new System.Drawing.Size(219, 22);
+			this.mi_fact_visitors.Size = new System.Drawing.Size(228, 22);
 			this.mi_fact_visitors.Text = "Фактические посетители";
 			// 
 			// загрузкаФайлаToolStripMenuItem
 			// 
 			this.загрузкаФайлаToolStripMenuItem.Name = "загрузкаФайлаToolStripMenuItem";
-			this.загрузкаФайлаToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+			this.загрузкаФайлаToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
 			this.загрузкаФайлаToolStripMenuItem.Text = "Загрузка файла";
 			this.загрузкаФайлаToolStripMenuItem.Click += new System.EventHandler(this.загрузкаФайлаToolStripMenuItem_Click);
+			// 
+			// настройкаШаблонаПечатиToolStripMenuItem
+			// 
+			this.настройкаШаблонаПечатиToolStripMenuItem.Name = "настройкаШаблонаПечатиToolStripMenuItem";
+			this.настройкаШаблонаПечатиToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+			this.настройкаШаблонаПечатиToolStripMenuItem.Text = "Настройка шаблона печати";
+			this.настройкаШаблонаПечатиToolStripMenuItem.Click += new System.EventHandler(this.настройкаШаблонаПечатиToolStripMenuItem_Click);
 			// 
 			// lbl_code
 			// 
@@ -155,18 +166,28 @@
 			// 
 			this.fontDialog1.Apply += new System.EventHandler(this.fontDialog1_Apply);
 			// 
-			// настройкаШаблонаПечатиToolStripMenuItem
+			// настройкаЦветаБейджаToolStripMenuItem
 			// 
-			this.настройкаШаблонаПечатиToolStripMenuItem.Name = "настройкаШаблонаПечатиToolStripMenuItem";
-			this.настройкаШаблонаПечатиToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-			this.настройкаШаблонаПечатиToolStripMenuItem.Text = "Настройка шаблона печати";
-			this.настройкаШаблонаПечатиToolStripMenuItem.Click += new System.EventHandler(this.настройкаШаблонаПечатиToolStripMenuItem_Click);
+			this.настройкаЦветаБейджаToolStripMenuItem.Name = "настройкаЦветаБейджаToolStripMenuItem";
+			this.настройкаЦветаБейджаToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+			this.настройкаЦветаБейджаToolStripMenuItem.Text = "Настройка цвета бейджа";
+			this.настройкаЦветаБейджаToolStripMenuItem.Click += new System.EventHandler(this.настройкаЦветаБейджаToolStripMenuItem_Click);
+			// 
+			// pb_color
+			// 
+			this.pb_color.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pb_color.Location = new System.Drawing.Point(868, 60);
+			this.pb_color.Name = "pb_color";
+			this.pb_color.Size = new System.Drawing.Size(94, 88);
+			this.pb_color.TabIndex = 6;
+			this.pb_color.TabStop = false;
 			// 
 			// GeneralForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1170, 656);
+			this.Controls.Add(this.pb_color);
 			this.Controls.Add(this.dgv_fakt_visitor);
 			this.Controls.Add(this.cb_code);
 			this.Controls.Add(this.lbl_staus);
@@ -180,6 +201,7 @@
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgv_fakt_visitor)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pb_color)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -203,6 +225,8 @@
 		private System.Windows.Forms.FontDialog fontDialog1;
 		private System.Windows.Forms.ToolStripMenuItem настройкаШаблонаПечатиToolStripMenuItem;
 		private System.Windows.Forms.ColorDialog colorDialog1;
+		private System.Windows.Forms.ToolStripMenuItem настройкаЦветаБейджаToolStripMenuItem;
+		private System.Windows.Forms.PictureBox pb_color;
 	}
 }
 

@@ -15,13 +15,13 @@ namespace Exhibition.View
 	public partial class FormPlanedVisitors : Form
 	{
 
-		ExhibitionDataContext_ context = new ExhibitionDataContext_();
+		ExhibitionDataForContext context = new ExhibitionDataForContext();
 		BindingSource bsExibitionPlanedVisitors = new BindingSource();
 
 		public FormPlanedVisitors()
 		{
 			InitializeComponent();
-			bsExibitionPlanedVisitors.DataSource = context.ExhibitionSVisitors.ToList();
+			bsExibitionPlanedVisitors.DataSource = context.ExhibitionVisitors.ToList();
 			dgvPlanedVisitors.DataSource = bsExibitionPlanedVisitors;
 			//InitDataGridView();
 		}
@@ -31,9 +31,9 @@ namespace Exhibition.View
 			throw new NotImplementedException();
 		}
 
-		private List<ExhibitionSVisitor> GetDatabaseAllCollection()
+		private List<ExhibitionVisitor> GetDatabaseAllCollection()
 		{
-			var collection = context.ExhibitionSVisitors.ToList();
+			var collection = context.ExhibitionVisitors.ToList();
 			return collection;
 		}
 	}

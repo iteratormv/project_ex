@@ -77,6 +77,9 @@ namespace Exhibition.View
 
 				if (visitor != null)
 				{
+					var cl = context.Descriptions.Where(d => d.Id == visitor.DescriptionId).Select(s => s.Color).FirstOrDefault();
+					var col = Color.FromName(cl);
+					pb_color.BackColor = col;
 					cb_code.Text = visitor.LastName + " " + visitor.FirstName;
 					cb_code.BackColor = Color.LightBlue;
 					cb_code.DropDownStyle = ComboBoxStyle.DropDown;
@@ -158,9 +161,9 @@ namespace Exhibition.View
 				Where(f => f.SettingName == current_setting_name).
 				Select(s => s.FontPO).FirstOrDefault().Split(' ');
 
-			posYlname = (int)(height / 8);
-			posYcompany = (int)(height / 3);
-			posYposition = (int)(height / 2);
+			posYlname = (int)(height / 10);
+			posYcompany = (int)(height / 22 * 10);
+			posYposition = (int)(height / 14 * 10);
 
 			string print_name = "";
 			if (ss.lts.Where(s => s.SettingName == current_setting_name)
@@ -259,6 +262,12 @@ namespace Exhibition.View
 		{
 			TemplateForm templForm = new TemplateForm(ss);
 			templForm.ShowDialog();
+		}
+
+		private void настройкаЦветаБейджаToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			ColorForm cf = new ColorForm();
+			cf.ShowDialog();
 		}
 	}
 }
