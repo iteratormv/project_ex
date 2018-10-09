@@ -37,6 +37,7 @@
 			this.mi_fact_visitors = new System.Windows.Forms.ToolStripMenuItem();
 			this.загрузкаФайлаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.настройкаШаблонаПечатиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.настройкаЦветаБейджаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.lbl_code = new System.Windows.Forms.Label();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.lbl_staus = new System.Windows.Forms.Label();
@@ -46,7 +47,6 @@
 			this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
 			this.fontDialog1 = new System.Windows.Forms.FontDialog();
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-			this.настройкаЦветаБейджаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.pb_color = new System.Windows.Forms.PictureBox();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgv_fakt_visitor)).BeginInit();
@@ -109,6 +109,13 @@
 			this.настройкаШаблонаПечатиToolStripMenuItem.Text = "Настройка шаблона печати";
 			this.настройкаШаблонаПечатиToolStripMenuItem.Click += new System.EventHandler(this.настройкаШаблонаПечатиToolStripMenuItem_Click);
 			// 
+			// настройкаЦветаБейджаToolStripMenuItem
+			// 
+			this.настройкаЦветаБейджаToolStripMenuItem.Name = "настройкаЦветаБейджаToolStripMenuItem";
+			this.настройкаЦветаБейджаToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+			this.настройкаЦветаБейджаToolStripMenuItem.Text = "Настройка цвета бейджа";
+			this.настройкаЦветаБейджаToolStripMenuItem.Click += new System.EventHandler(this.настройкаЦветаБейджаToolStripMenuItem_Click);
+			// 
 			// lbl_code
 			// 
 			this.lbl_code.AutoSize = true;
@@ -137,6 +144,7 @@
 			this.cb_code.Name = "cb_code";
 			this.cb_code.Size = new System.Drawing.Size(448, 39);
 			this.cb_code.TabIndex = 4;
+//			this.cb_code.SelectedIndexChanged += new System.EventHandler(this.cb_code_SelectedIndexChanged);
 			this.cb_code.TextChanged += new System.EventHandler(this.cb_code_TextChanged);
 			this.cb_code.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cb_code_KeyDown);
 			// 
@@ -165,13 +173,6 @@
 			// fontDialog1
 			// 
 			this.fontDialog1.Apply += new System.EventHandler(this.fontDialog1_Apply);
-			// 
-			// настройкаЦветаБейджаToolStripMenuItem
-			// 
-			this.настройкаЦветаБейджаToolStripMenuItem.Name = "настройкаЦветаБейджаToolStripMenuItem";
-			this.настройкаЦветаБейджаToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-			this.настройкаЦветаБейджаToolStripMenuItem.Text = "Настройка цвета бейджа";
-			this.настройкаЦветаБейджаToolStripMenuItem.Click += new System.EventHandler(this.настройкаЦветаБейджаToolStripMenuItem_Click);
 			// 
 			// pb_color
 			// 

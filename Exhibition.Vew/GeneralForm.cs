@@ -77,7 +77,7 @@ namespace Exhibition.View
 
 				if (visitor != null)
 				{
-					var cl = context.Descriptions.Where(d => d.Id == visitor.DescriptionId).Select(s => s.Color).FirstOrDefault();
+		            var cl = context.Descriptions.Where(d => d.Id == visitor.DescriptionId).Select(s => s.Color).FirstOrDefault();
 					var col = Color.FromName(cl);
 					pb_color.BackColor = col;
 					cb_code.Text = visitor.LastName + " " + visitor.FirstName;
@@ -269,5 +269,46 @@ namespace Exhibition.View
 			ColorForm cf = new ColorForm();
 			cf.ShowDialog();
 		}
+
+		//private void cb_code_SelectedIndexChanged(object sender, EventArgs e)
+		//{
+		//	var search = cb_code.Text;
+		//	var se = search.Split(' ');
+		//	string sea = se[0];
+		//	var visitorId = context.ExhibitionVisitors.Where(u => u.LastName.Contains(sea)).Select(us => us.Id).FirstOrDefault();
+		//	var visitor = context.ExhibitionVisitors.Where(u => u.Id == visitorId).FirstOrDefault();
+
+		//	if (visitor != null)
+		//	{
+		//		var cl = context.Descriptions.Where(d => d.Id == visitor.DescriptionId).Select(s => s.Color).FirstOrDefault();
+		//		var col = Color.FromName(cl);
+		//		pb_color.BackColor = col;
+		//		cb_code.Text = visitor.LastName + " " + visitor.FirstName;
+		//	}
+
+		//private void cb_code_DropDownClosed(object sender, EventArgs e)
+		//{
+		//	var search = cb_code.Text;
+		//	var se = search.Split(' ');
+		//	string sea = se[0];
+		//	var visitorId = context.ExhibitionVisitors.Where(u => u.LastName.Contains(sea)).Select(us => us.Id).FirstOrDefault();
+		//	var visitor = context.ExhibitionVisitors.Where(u => u.Id == visitorId).FirstOrDefault();
+
+		//	if (visitor != null)
+		//	{
+		//		var cl = context.Descriptions.Where(d => d.Id == visitor.DescriptionId).Select(s => s.Color).FirstOrDefault();
+		//		var col = Color.FromName(cl);
+		//		pb_color.BackColor = col;
+		//		cb_code.Text = visitor.LastName + " " + visitor.FirstName;
+		//		//cb_code.BackColor = Color.LightBlue;
+		//		//cb_code.DropDownStyle = ComboBoxStyle.DropDown;
+
+		//		//var collection = context.ExhibitionVisitors
+		//		//	.Where(u => u.LastName.Contains(search))
+		//		//	.Select(us => us.LastName + " " + us.FirstName).ToList();
+		//		//cb_code.DataSource = collection;
+		//		//isSelectAndPrint = true;
+		//	}
+	//	}
 	}
 }
