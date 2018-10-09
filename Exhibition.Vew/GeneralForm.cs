@@ -137,7 +137,7 @@ namespace Exhibition.View
 		private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
 		{
 			double width, height;
-			string[] font_fnames, font_lnames, font_patronims, font_companys, font_positions;
+			//string[] font_fnames, font_lnames, font_patronims, font_companys, font_positions;
 			string current_setting_name = sett_context.CurrentSettings.FirstOrDefault().CSName;
 			int posYlname, posYcompany, posYposition;//, posYfmane, posYpathronim;
 
@@ -145,21 +145,21 @@ namespace Exhibition.View
 			height = e.PageBounds.Height;
 			width = e.PageBounds.Width;
 
-			font_fnames = sett_context.TemplateSettings.
-				Where(f=>f.SettingName == current_setting_name).
-				Select(s=>s.FontFN).FirstOrDefault().ToString().Split(' ');
-			font_lnames = sett_context.TemplateSettings.
+			var settings = sett_context.TemplateSettings.
 				Where(f => f.SettingName == current_setting_name).
-				Select(s => s.FontLN).FirstOrDefault().Split(' ');
-			font_patronims = sett_context.TemplateSettings.
-				Where(f => f.SettingName == current_setting_name).
-				Select(s => s.FontPA).FirstOrDefault().Split(' ');
-			font_companys = sett_context.TemplateSettings.
-				Where(f => f.SettingName == current_setting_name).
-				Select(s => s.FontCO).FirstOrDefault().Split(' ');
-			font_positions = sett_context.TemplateSettings.
-				Where(f => f.SettingName == current_setting_name).
-				Select(s => s.FontPO).FirstOrDefault().Split(' ');
+				Select(s => s).FirstOrDefault();
+			//var font_lnames = sett_context.TemplateSettings.
+			//	Where(f => f.SettingName == current_setting_name).
+			//	Select(s => s.FontLN).FirstOrDefault().Split(' ');
+			//font_patronims = sett_context.TemplateSettings.
+			//	Where(f => f.SettingName == current_setting_name).
+			//	Select(s => s.FontPA).FirstOrDefault().Split(' ');
+			//font_companys = sett_context.TemplateSettings.
+			//	Where(f => f.SettingName == current_setting_name).
+			//	Select(s => s.FontCO).FirstOrDefault().Split(' ');
+			//font_positions = sett_context.TemplateSettings.
+			//	Where(f => f.SettingName == current_setting_name).
+			//	Select(s => s.FontPO).FirstOrDefault().Split(' ');
 
 			posYlname = (int)(height / 10);
 			posYcompany = (int)(height / 22 * 10);
@@ -176,13 +176,14 @@ namespace Exhibition.View
 			if (print_name != "")
 			{
 				string[] print_names = print_name.Split(' ');
-				FontFamily nff = new FontFamily(font_fnames[0]);
-				FontStyle nfs = (FontStyle)int.Parse("2");
-				Font nfont = new Font(nff, float.Parse(font_fnames[1]), nfs);
+				FontFamily nff = new FontFamily(settings.FontNameNA);
+				FontStyle nfs = (FontStyle)settings.FontStyleNA;
+				float nfz = settings.FontSizeNA;
+				Font nfont = new Font(nff, nfz, nfs);
 				var list_name = validateStrings(nfont, (int)width, print_name);
 				for (int i = 0; i < list_name.Count(); i++)
 				{
-					displayString(nfont, (int)width, posYlname + i * (int)float.Parse(font_fnames[1]) * 15 / 10, list_name[i], e);
+					displayString(nfont, (int)width, posYlname + i * (int)nfz * 15 / 10, list_name[i], e);
 				}
 			}
 
@@ -193,13 +194,14 @@ namespace Exhibition.View
 				{
 					string print_company = context.Companies.Where(v=>v.Id == select_visitor.CompanyId).Select(v=>v.Name).FirstOrDefault();
 					string[] print_companys = print_company.Split(' ');
-					FontFamily cff = new FontFamily(font_companys[0]);
-					FontStyle сfs = (FontStyle)int.Parse("2");
-					Font сfont = new Font(cff, float.Parse(font_companys[1]), сfs);
+					FontFamily cff = new FontFamily(settings.FontNameCO);
+					FontStyle сfs = (FontStyle)settings.FontStyleCO;
+					float cfz = settings.FontSizeCO;
+					Font сfont = new Font(cff, cfz, сfs);
 					var list_company = validateStrings(сfont, (int)width, print_company);
 					for (int i = 0; i < list_company.Count(); i++)
 					{
-						displayString(сfont, (int)width, posYcompany + i * (int)float.Parse(font_companys[1]) * 15 / 10, list_company[i], e);
+						displayString(сfont, (int)width, posYcompany + i * (int)cfz * 15 / 10, list_company[i], e);
 					}
 				}
 			}
@@ -211,13 +213,14 @@ namespace Exhibition.View
 				{
 					string print_position = context.Positions.Where(p=>p.Id == select_visitor.PositionId).Select(p=>p.Name).FirstOrDefault();
 					string[] print_positions = print_position.Split(' ');
-					FontFamily pff = new FontFamily(font_positions[0]);
-					FontStyle pfs = (FontStyle)int.Parse("2");
-					Font pfont = new Font(pff, float.Parse(font_positions[1]), pfs);
+					FontFamily pff = new FontFamily(settings.FontNamePO);
+					FontStyle pfs = (FontStyle)settings.FontStylePO;
+					float pfz = settings.FontSizePO;
+					Font pfont = new Font(pff, pfz, pfs);
 					var list_position = validateStrings(pfont, (int)width, print_position);
 					for (int i = 0; i < list_position.Count(); i++)
 					{
-						displayString(pfont, (int)width, posYposition + i * (int)float.Parse(font_positions[1]) * 15 / 10, list_position[i], e);
+						displayString(pfont, (int)width, posYposition + i * (int)pfz * 15 / 10, list_position[i], e);
 					}
 				}
 			}

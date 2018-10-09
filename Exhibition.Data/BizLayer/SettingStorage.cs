@@ -34,11 +34,18 @@ namespace Exhibition.Data.BizLayer
 				defaultSetting.isPAvisible = true;
 				defaultSetting.isCOvisible = true;
 				defaultSetting.isPOvisible = true;
-				defaultSetting.FontFN = "Arial 9,75 Regular";
-				defaultSetting.FontLN = "Arial 9,75 Regular";
-				defaultSetting.FontPA = "Arial 9,75 Regular";
-				defaultSetting.FontCO = "Arial 8,25 Regular";
-				defaultSetting.FontPO = "Arial 8,25 Regular";
+
+				defaultSetting.FontNameNA = "Arial";
+				defaultSetting.FontNameCO = "Arial";
+				defaultSetting.FontNamePO = "Arial";
+
+				defaultSetting.FontSizeNA = 9.75f;
+				defaultSetting.FontSizeCO = 8.25f;
+				defaultSetting.FontSizePO = 8.25f;
+
+				defaultSetting.FontStyleNA = 0;
+				defaultSetting.FontStyleCO = 0;
+				defaultSetting.FontStylePO = 0;
 				defaultSetting.SettingName = "default";
 
 				context.TemplateSettings.Add(defaultSetting);

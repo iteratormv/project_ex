@@ -20,11 +20,17 @@ namespace Exhibition.Data.SettingModel
 		public bool isCOvisible { get; set; }
 		public bool isCanDelete { get; set; }
 
-		public string FontFN { get; set; }
-		public string FontLN { get; set; }
-		public string FontPA { get; set; }
-		public string FontPO { get; set; }
-		public string FontCO { get; set; }
+		public string FontNameNA { get; set; }
+		public string FontNamePO { get; set; }
+		public string FontNameCO { get; set; }
+
+		public float FontSizeNA { get; set; }
+		public float FontSizePO { get; set; }
+		public float FontSizeCO { get; set; }
+
+		public int FontStyleNA { get; set; }
+		public int FontStylePO { get; set; }
+		public int FontStyleCO { get; set; }
 
 		public string SettingName { get; set; }
 	}

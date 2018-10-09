@@ -32,6 +32,9 @@ namespace Exhibition.Vew
 		private TemplateSetting createSetting()
 		{
 			var setting = new TemplateSetting();
+			var font_names = cmb_font_lastname.Text.Split('-');
+			var font_companies = cmb_font_company.Text.Split('-');
+			var font_positions = cmb_font_position.Text.Split('-');
 
 			setting.isCanDelete = true;
 			setting.isFNvisible = cb_firstname.Checked;
@@ -39,11 +42,15 @@ namespace Exhibition.Vew
 			setting.isPAvisible = cb_patronim.Checked;
 			setting.isCOvisible = cb_company.Checked;
 			setting.isPOvisible = cb_position.Checked;
-			setting.FontFN = cmb_font_firstname.Text;
-			setting.FontLN = cmb_font_lastname.Text;
-			setting.FontPA = cmb_font_pathronim.Text;
-			setting.FontCO = cmb_font_company.Text;
-			setting.FontPO = cmb_font_position.Text;
+			setting.FontNameNA = font_names[0];
+			setting.FontNameCO = font_companies[0];
+			setting.FontNamePO = font_positions[0];
+			setting.FontSizeNA = float.Parse(font_names[1]);
+			setting.FontSizeCO = float.Parse(font_companies[1]);
+			setting.FontSizePO = float.Parse(font_positions[1]);
+			setting.FontStyleNA = int.Parse(font_names[2]);
+			setting.FontStyleCO = int.Parse(font_companies[2]);
+			setting.FontStylePO = int.Parse(font_positions[2]);
 			setting.SettingName = cmb_setting_name.Text;
 
 			return setting;
@@ -61,11 +68,11 @@ namespace Exhibition.Vew
 
 			cmb_setting_name.DataSource = settings.Select(s=>s.SettingName).ToList();
 			cmb_setting_name.Text = currentSettingName;
-			cmb_font_firstname.Text = currentSetting.FontFN;
-			cmb_font_lastname.Text = currentSetting.FontLN;
-			cmb_font_pathronim.Text = currentSetting.FontPA;
-			cmb_font_company.Text = currentSetting.FontCO;
-			cmb_font_position.Text = currentSetting.FontPO;
+		//	cmb_font_firstname.Text = currentSetting.FontNameNA + "-" + currentSetting.FontSizeNA + "-" + currentSetting.FontStyleNA;
+			cmb_font_lastname.Text = currentSetting.FontNameNA + "-" + currentSetting.FontSizeNA + "-" + currentSetting.FontStyleNA;
+		//	cmb_font_pathronim.Text = currentSetting.FontPA;
+			cmb_font_company.Text = currentSetting.FontNameCO + "-" + currentSetting.FontSizeCO + "-" + currentSetting.FontStyleCO;
+			cmb_font_position.Text = currentSetting.FontNamePO + "-" + currentSetting.FontSizePO + "-" + currentSetting.FontStylePO;
 			cb_firstname.Checked = currentSetting.isFNvisible;
 			cb_lasname.Checked = currentSetting.isLNvisible;
 			cb_patronim.Checked = currentSetting.isPAvisible;
@@ -117,33 +124,13 @@ namespace Exhibition.Vew
 			displayInfo(cs);
 		}
 
-		private void cmb_font_firstname_Click(object sender, EventArgs e)
-		{
-			FontDialog fd = new FontDialog();
-			var result = fd.ShowDialog();
-			if (result == DialogResult.OK)
-			{
-				cmb_font_firstname.Text = fd.Font.Name + " " + fd.Font.Size + " " + fd.Font.Style;
-			}
-		}
-
 		private void cmb_font_lastname_Click(object sender, EventArgs e)
 		{
 			FontDialog fd = new FontDialog();
 			var result = fd.ShowDialog();
 			if (result == DialogResult.OK)
 			{
-				cmb_font_lastname.Text = fd.Font.Name + " " + fd.Font.Size + " " + fd.Font.Style;
-			}
-		}
-
-		private void cmb_font_pathronim_Click(object sender, EventArgs e)
-		{
-			FontDialog fd = new FontDialog();
-			var result = fd.ShowDialog();
-			if (result == DialogResult.OK)
-			{
-				cmb_font_pathronim.Text = fd.Font.Name + " " + fd.Font.Size + " " + fd.Font.Style;
+				cmb_font_lastname.Text = fd.Font.Name + "-" + fd.Font.Size + "-" + (int)fd.Font.Style;
 			}
 		}
 
@@ -153,7 +140,7 @@ namespace Exhibition.Vew
 			var result = fd.ShowDialog();
 			if (result == DialogResult.OK)
 			{
-				cmb_font_company.Text = fd.Font.Name + " " + fd.Font.Size + " " + fd.Font.Style;
+				cmb_font_company.Text = fd.Font.Name + "-" + fd.Font.Size + "-" + (int)fd.Font.Style;
 			}
 		}
 
@@ -163,8 +150,13 @@ namespace Exhibition.Vew
 			var result = fd.ShowDialog();
 			if (result == DialogResult.OK)
 			{
-				cmb_font_position.Text = fd.Font.Name + " " + fd.Font.Size + " " + fd.Font.Style;
+				cmb_font_position.Text = fd.Font.Name + "-" + fd.Font.Size + "-" + (int)fd.Font.Style;
 			}
+		}
+
+		private void label2_Click(object sender, EventArgs e)
+		{
+
 		}
 	}
 }
