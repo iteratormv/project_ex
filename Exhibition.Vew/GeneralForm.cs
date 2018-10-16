@@ -36,7 +36,7 @@ namespace Exhibition.View
 		private void initialDataGread()
 		{
 			List<ExhibitionVisitor> dgv_collection = null;
-			if(context.ExhibitionVisitors.Select(s=>s).Count()!=0) dgv_collection = context.ExhibitionVisitors.Where(e => e.Status == "fact").ToList();
+			if(context.ExhibitionVisitors.Select(s=>s).Count()!=0) dgv_collection = context.ExhibitionVisitors.Where(e => (e.Status == "fact"||e.Status == "newfact")).ToList();
 			bs.DataSource = dgv_collection;
 			dgv_fakt_visitor.DataSource = bs;
 		}
@@ -123,6 +123,16 @@ namespace Exhibition.View
 			printVisitor();
 		}
 
+		public void addVisitorToFact(ExhibitionVisitor select_visitor, string status)
+		{
+			this.select_visitor = select_visitor;
+			bs.Add(select_visitor);
+			context.ExhibitionVisitors.Add(select_visitor);
+			context.SaveChanges();
+			printVisitor();
+		}
+
+
 		private void GeneralForm_Load(object sender, EventArgs e)
 		{
 
@@ -130,17 +140,20 @@ namespace Exhibition.View
 
 		private void printVisitor()
 		{
-			printPreviewDialog1.Document = printDocument1;
-			printPreviewDialog1.ShowDialog();
+			printDialog1.Document = printDocument1;
+			DialogResult r =  printDialog1.ShowDialog();
+			if (r == DialogResult.OK) printDocument1.Print();
+
+
+		//	printPreviewDialog1.Document = printDocument1;
+		//	printPreviewDialog1.ShowDialog();
 		}
 
 		private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
 		{
 			double width, height;
-			//string[] font_fnames, font_lnames, font_patronims, font_companys, font_positions;
 			string current_setting_name = sett_context.CurrentSettings.FirstOrDefault().CSName;
-			int posYlname, posYcompany, posYposition;//, posYfmane, posYpathronim;
-
+			int posYlname, posYcompany, posYposition;
 
 			height = e.PageBounds.Height;
 			width = e.PageBounds.Width;
@@ -148,18 +161,6 @@ namespace Exhibition.View
 			var settings = sett_context.TemplateSettings.
 				Where(f => f.SettingName == current_setting_name).
 				Select(s => s).FirstOrDefault();
-			//var font_lnames = sett_context.TemplateSettings.
-			//	Where(f => f.SettingName == current_setting_name).
-			//	Select(s => s.FontLN).FirstOrDefault().Split(' ');
-			//font_patronims = sett_context.TemplateSettings.
-			//	Where(f => f.SettingName == current_setting_name).
-			//	Select(s => s.FontPA).FirstOrDefault().Split(' ');
-			//font_companys = sett_context.TemplateSettings.
-			//	Where(f => f.SettingName == current_setting_name).
-			//	Select(s => s.FontCO).FirstOrDefault().Split(' ');
-			//font_positions = sett_context.TemplateSettings.
-			//	Where(f => f.SettingName == current_setting_name).
-			//	Select(s => s.FontPO).FirstOrDefault().Split(' ');
 
 			posYlname = (int)(height / 10);
 			posYcompany = (int)(height / 22 * 10);
@@ -176,6 +177,7 @@ namespace Exhibition.View
 			if (print_name != "")
 			{
 				string[] print_names = print_name.Split(' ');
+
 				FontFamily nff = new FontFamily(settings.FontNameNA);
 				FontStyle nfs = (FontStyle)settings.FontStyleNA;
 				float nfz = settings.FontSizeNA;
@@ -273,45 +275,15 @@ namespace Exhibition.View
 			cf.ShowDialog();
 		}
 
-		//private void cb_code_SelectedIndexChanged(object sender, EventArgs e)
-		//{
-		//	var search = cb_code.Text;
-		//	var se = search.Split(' ');
-		//	string sea = se[0];
-		//	var visitorId = context.ExhibitionVisitors.Where(u => u.LastName.Contains(sea)).Select(us => us.Id).FirstOrDefault();
-		//	var visitor = context.ExhibitionVisitors.Where(u => u.Id == visitorId).FirstOrDefault();
+		private void btn_create_visitior_Click(object sender, EventArgs e)
+		{
+			CreateVisitorForm cv_form = new CreateVisitorForm(this);
+			cv_form.ShowDialog();
+		}
 
-		//	if (visitor != null)
-		//	{
-		//		var cl = context.Descriptions.Where(d => d.Id == visitor.DescriptionId).Select(s => s.Color).FirstOrDefault();
-		//		var col = Color.FromName(cl);
-		//		pb_color.BackColor = col;
-		//		cb_code.Text = visitor.LastName + " " + visitor.FirstName;
-		//	}
+		private void dgv_fakt_visitor_DoubleClick(object sender, EventArgs e)
+		{
 
-		//private void cb_code_DropDownClosed(object sender, EventArgs e)
-		//{
-		//	var search = cb_code.Text;
-		//	var se = search.Split(' ');
-		//	string sea = se[0];
-		//	var visitorId = context.ExhibitionVisitors.Where(u => u.LastName.Contains(sea)).Select(us => us.Id).FirstOrDefault();
-		//	var visitor = context.ExhibitionVisitors.Where(u => u.Id == visitorId).FirstOrDefault();
-
-		//	if (visitor != null)
-		//	{
-		//		var cl = context.Descriptions.Where(d => d.Id == visitor.DescriptionId).Select(s => s.Color).FirstOrDefault();
-		//		var col = Color.FromName(cl);
-		//		pb_color.BackColor = col;
-		//		cb_code.Text = visitor.LastName + " " + visitor.FirstName;
-		//		//cb_code.BackColor = Color.LightBlue;
-		//		//cb_code.DropDownStyle = ComboBoxStyle.DropDown;
-
-		//		//var collection = context.ExhibitionVisitors
-		//		//	.Where(u => u.LastName.Contains(search))
-		//		//	.Select(us => us.LastName + " " + us.FirstName).ToList();
-		//		//cb_code.DataSource = collection;
-		//		//isSelectAndPrint = true;
-		//	}
-	//	}
+		}
 	}
 }

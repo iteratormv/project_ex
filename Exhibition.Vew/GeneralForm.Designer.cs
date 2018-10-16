@@ -48,6 +48,8 @@
 			this.fontDialog1 = new System.Windows.Forms.FontDialog();
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
 			this.pb_color = new System.Windows.Forms.PictureBox();
+			this.btn_create_visitior = new System.Windows.Forms.Button();
+			this.printDialog1 = new System.Windows.Forms.PrintDialog();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgv_fakt_visitor)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pb_color)).BeginInit();
@@ -142,9 +144,8 @@
 			this.cb_code.ItemHeight = 31;
 			this.cb_code.Location = new System.Drawing.Point(156, 109);
 			this.cb_code.Name = "cb_code";
-			this.cb_code.Size = new System.Drawing.Size(448, 39);
+			this.cb_code.Size = new System.Drawing.Size(639, 39);
 			this.cb_code.TabIndex = 4;
-//			this.cb_code.SelectedIndexChanged += new System.EventHandler(this.cb_code_SelectedIndexChanged);
 			this.cb_code.TextChanged += new System.EventHandler(this.cb_code_TextChanged);
 			this.cb_code.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cb_code_KeyDown);
 			// 
@@ -155,6 +156,7 @@
 			this.dgv_fakt_visitor.Name = "dgv_fakt_visitor";
 			this.dgv_fakt_visitor.Size = new System.Drawing.Size(1123, 434);
 			this.dgv_fakt_visitor.TabIndex = 5;
+			this.dgv_fakt_visitor.DoubleClick += new System.EventHandler(this.dgv_fakt_visitor_DoubleClick);
 			// 
 			// printDocument1
 			// 
@@ -177,17 +179,32 @@
 			// pb_color
 			// 
 			this.pb_color.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.pb_color.Location = new System.Drawing.Point(868, 60);
+			this.pb_color.Location = new System.Drawing.Point(818, 61);
 			this.pb_color.Name = "pb_color";
-			this.pb_color.Size = new System.Drawing.Size(94, 88);
+			this.pb_color.Size = new System.Drawing.Size(155, 88);
 			this.pb_color.TabIndex = 6;
 			this.pb_color.TabStop = false;
+			// 
+			// btn_create_visitior
+			// 
+			this.btn_create_visitior.Location = new System.Drawing.Point(996, 61);
+			this.btn_create_visitior.Name = "btn_create_visitior";
+			this.btn_create_visitior.Size = new System.Drawing.Size(151, 87);
+			this.btn_create_visitior.TabIndex = 7;
+			this.btn_create_visitior.Text = "Создать посетителя";
+			this.btn_create_visitior.UseVisualStyleBackColor = true;
+			this.btn_create_visitior.Click += new System.EventHandler(this.btn_create_visitior_Click);
+			// 
+			// printDialog1
+			// 
+			this.printDialog1.UseEXDialog = true;
 			// 
 			// GeneralForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1170, 656);
+			this.Controls.Add(this.btn_create_visitior);
 			this.Controls.Add(this.pb_color);
 			this.Controls.Add(this.dgv_fakt_visitor);
 			this.Controls.Add(this.cb_code);
@@ -228,6 +245,8 @@
 		private System.Windows.Forms.ColorDialog colorDialog1;
 		private System.Windows.Forms.ToolStripMenuItem настройкаЦветаБейджаToolStripMenuItem;
 		private System.Windows.Forms.PictureBox pb_color;
+		private System.Windows.Forms.Button btn_create_visitior;
+		private System.Windows.Forms.PrintDialog printDialog1;
 	}
 }
 

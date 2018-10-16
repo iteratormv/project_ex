@@ -63,6 +63,12 @@
     <Compile Include="ColorForm.Designer.cs">
       <DependentUpon>ColorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CreateVisitorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateVisitorForm.Designer.cs">
+      <DependentUpon>CreateVisitorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPlanedVisitors.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,6 +91,9 @@
     </Compile>
     <EmbeddedResource Include="ColorForm.resx">
       <DependentUpon>ColorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateVisitorForm.resx">
+      <DependentUpon>CreateVisitorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPlanedVisitors.resx">
       <DependentUpon>FormPlanedVisitors.cs</DependentUpon>

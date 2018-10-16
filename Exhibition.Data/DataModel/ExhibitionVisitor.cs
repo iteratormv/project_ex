@@ -20,6 +20,7 @@ namespace Exhibition.Data.DataModel
 		public string Status { get; set; }
 		public string WorkPhone { get; set; }
 		public string Pathronim { get; set; }
+		public DateTime? DateCreated { get; set; }
 
 		public int CityId { get; set; }
 		public int CompanyId { get; set; }
