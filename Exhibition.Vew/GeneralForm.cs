@@ -6,6 +6,7 @@ using Exhibition.Vew;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity.Migrations;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
@@ -31,19 +32,22 @@ namespace Exhibition.View
 			initialDataGread();
 			ss = new SettingStorage();
 			templForm = new TemplateForm(ss);
+			var count = context.ExhibitionVisitors.Where(v => v.Status != "registered").Select(s => s).Count();
+			lb_count.Text = count.ToString();
 		}
 
 		private void initialDataGread()
 		{
 			List<ExhibitionVisitor> dgv_collection = null;
-			if(context.ExhibitionVisitors.Select(s=>s).Count()!=0) dgv_collection = context.ExhibitionVisitors.Where(e => (e.Status == "fact"||e.Status == "newfact")).ToList();
+			if(context.ExhibitionVisitors.Select(s=>s).Count()!=0) dgv_collection = context.ExhibitionVisitors.Where(e => 
+			(e.Status == "fact"||e.Status == "newfact"||e.Status == "factcorrect"||e.Status == "newfactcorrect")).ToList();
 			bs.DataSource = dgv_collection;
 			dgv_fakt_visitor.DataSource = bs;
 		}
 
 		private void mi_planed_visitors_Click(object sender, EventArgs e)
 		{
-			FormPlanedVisitors pvform = new FormPlanedVisitors();
+			RaportsForm pvform = new RaportsForm(2);
 			pvform.ShowDialog();
 		}
 
@@ -54,9 +58,6 @@ namespace Exhibition.View
 			string filename = s.FileName;
 
 			data = new ExelData(filename);
-			//		Thread labelStatusThread = new Thread(GetStatus(data));
-			//		labelStatusThread.IsBackground = true;
-			//		labelStatusThread.Start();
 
 			data.createForDatabase();
 			data.getForDataToDatabase();
@@ -77,9 +78,6 @@ namespace Exhibition.View
 
 				if (visitor != null)
 				{
-		            var cl = context.Descriptions.Where(d => d.Id == visitor.DescriptionId).Select(s => s.Color).FirstOrDefault();
-					var col = Color.FromName(cl);
-					pb_color.BackColor = col;
 					cb_code.Text = visitor.LastName + " " + visitor.FirstName;
 					cb_code.BackColor = Color.LightBlue;
 					cb_code.DropDownStyle = ComboBoxStyle.DropDown;
@@ -103,10 +101,18 @@ namespace Exhibition.View
 				var current_lname = current_visitor[0];
 				select_visitor = context.ExhibitionVisitors.Where
 				   (v => v.FirstName == current_name && v.LastName == current_lname).FirstOrDefault();
-				addVisitorToFact(select_visitor);
-				cb_code.Text = "";
-				cb_code.BackColor = Color.White;
-				initialDataGread();
+				if (select_visitor.Status == "registered")
+				{
+					addVisitorToFact(select_visitor);
+					cb_code.Text = "";
+					cb_code.BackColor = Color.White;
+					initialDataGread();
+				}
+				else
+				{
+					СhoiceForm c_form = new СhoiceForm(this, select_visitor);
+					c_form.ShowDialog();
+				}
 			}
 
 			if (e.KeyCode == Keys.Down && isSelectAndPrint == true)
@@ -118,20 +124,30 @@ namespace Exhibition.View
 		private void addVisitorToFact(ExhibitionVisitor select_visitor)
 		{
 			select_visitor.Status = "fact";
+			select_visitor.DateCreated = DateTime.Now;
 			bs.Add(select_visitor);
 			context.SaveChanges();
+			var cl = context.Descriptions.Where(d => d.Id == select_visitor.DescriptionId).Select(s => s.Color).FirstOrDefault();
+			var col = Color.FromName(cl);
+			var count = context.ExhibitionVisitors.Where(v => v.Status != "registered").Select(s => s).Count();
+			lb_count.Text = count.ToString();
+			pb_color.BackColor = col;
 			printVisitor();
 		}
 
 		public void addVisitorToFact(ExhibitionVisitor select_visitor, string status)
 		{
 			this.select_visitor = select_visitor;
-			bs.Add(select_visitor);
-			context.ExhibitionVisitors.Add(select_visitor);
+			if(!bs.Contains(select_visitor)) bs.Add(select_visitor);
+			context.ExhibitionVisitors.AddOrUpdate(select_visitor);
 			context.SaveChanges();
+			var cl = context.Descriptions.Where(d => d.Id == select_visitor.DescriptionId).Select(s => s.Color).FirstOrDefault();
+			var col = Color.FromName(cl);
+			var count = context.ExhibitionVisitors.Where(v => v.Status != "registered").Select(s => s).Count();
+			lb_count.Text = count.ToString();
+			pb_color.BackColor = col;
 			printVisitor();
 		}
-
 
 		private void GeneralForm_Load(object sender, EventArgs e)
 		{
@@ -143,10 +159,14 @@ namespace Exhibition.View
 			printDialog1.Document = printDocument1;
 			DialogResult r =  printDialog1.ShowDialog();
 			if (r == DialogResult.OK) printDocument1.Print();
+		}
 
-
-		//	printPreviewDialog1.Document = printDocument1;
-		//	printPreviewDialog1.ShowDialog();
+		public void printVisitor(ExhibitionVisitor visitor)
+		{
+			select_visitor = visitor;
+			printDialog1.Document = printDocument1;
+			DialogResult r = printDialog1.ShowDialog();
+			if (r == DialogResult.OK) printDocument1.Print();
 		}
 
 		private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
@@ -279,11 +299,45 @@ namespace Exhibition.View
 		{
 			CreateVisitorForm cv_form = new CreateVisitorForm(this);
 			cv_form.ShowDialog();
+			this.Refresh();
 		}
 
 		private void dgv_fakt_visitor_DoubleClick(object sender, EventArgs e)
 		{
+			var cur_visitor = bs.Current as ExhibitionVisitor;
+			CreateVisitorForm cv_form = new CreateVisitorForm(this, cur_visitor);
+			cv_form.ShowDialog();
+			this.Refresh();
+		}
 
+		private void зарегистрированныеПосетилеиToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			RaportsForm pvform = new RaportsForm(1);
+			pvform.ShowDialog();
+		}
+
+		private void актуализированныеПосетилелиToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			RaportsForm pvform = new RaportsForm(2);
+			pvform.ShowDialog();
+		}
+
+		private void неактуализированниыеПосетителиToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			RaportsForm pvform = new RaportsForm(4);
+			pvform.ShowDialog();
+		}
+
+		private void созданныеПосетителиToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			RaportsForm pvform = new RaportsForm(3);
+			pvform.ShowDialog();
+		}
+
+		private void GeneralForm_SizeChanged(object sender, EventArgs e)
+		{
+			dgv_fakt_visitor.Width = this.Width - 60;
+			dgv_fakt_visitor.Height = this.Height - 230;
 		}
 	}
 }

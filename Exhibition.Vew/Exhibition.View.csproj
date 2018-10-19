@@ -69,11 +69,11 @@
     <Compile Include="CreateVisitorForm.Designer.cs">
       <DependentUpon>CreateVisitorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPlanedVisitors.cs">
+    <Compile Include="RaportsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPlanedVisitors.Designer.cs">
-      <DependentUpon>FormPlanedVisitors.cs</DependentUpon>
+    <Compile Include="RaportsForm.Designer.cs">
+      <DependentUpon>RaportsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GeneralForm.cs">
       <SubType>Form</SubType>
@@ -89,14 +89,20 @@
     <Compile Include="TemplateForm.Designer.cs">
       <DependentUpon>TemplateForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="СhoiceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="СhoiceForm.Designer.cs">
+      <DependentUpon>СhoiceForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ColorForm.resx">
       <DependentUpon>ColorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CreateVisitorForm.resx">
       <DependentUpon>CreateVisitorForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPlanedVisitors.resx">
-      <DependentUpon>FormPlanedVisitors.cs</DependentUpon>
+    <EmbeddedResource Include="RaportsForm.resx">
+      <DependentUpon>RaportsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GeneralForm.resx">
       <DependentUpon>GeneralForm.cs</DependentUpon>
@@ -112,6 +118,9 @@
     </Compile>
     <EmbeddedResource Include="TemplateForm.resx">
       <DependentUpon>TemplateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="СhoiceForm.resx">
+      <DependentUpon>СhoiceForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

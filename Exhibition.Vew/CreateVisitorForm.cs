@@ -18,9 +18,11 @@ namespace Exhibition.Vew
 		ExhibitionDataForContext context = new ExhibitionDataForContext();
 		bool need_print { get; set; }
 		GeneralForm create_form;
+		ExhibitionVisitor visitor { get; set; }
 
 		public CreateVisitorForm(GeneralForm f)
 		{
+			visitor = new ExhibitionVisitor();
 			InitializeComponent();
 			cmb_exhebition.DataSource = context.Exhibits.Where(v => v.Name != "none").Select(s => s).ToList();
 			cmb_exhebition.DisplayMember = "Name";
@@ -29,17 +31,44 @@ namespace Exhibition.Vew
 			create_form = f;
 		}
 
+
+		public CreateVisitorForm(GeneralForm f, ExhibitionVisitor v)
+		{
+			visitor = v;
+			InitializeComponent();
+			cmb_exhebition.DataSource = context.Exhibits.Where(vi => vi.Name != "none").Select(s => s).ToList();
+			cmb_exhebition.DisplayMember = "Name";
+			cmb_exhebition.ValueMember = "Id";
+			need_print = false;
+			create_form = f;
+			txb_lname.Text = v.LastName;
+			txb_fname.Text = v.FirstName;
+			txb_pathronim.Text = v.Pathronim;
+			txb_company.Text = context.Companies.Where(co => co.Id == v.CompanyId).Select(c => c.Name).FirstOrDefault();
+			txb_position.Text = context.Positions.Where(co => co.Id == v.PositionId).Select(c => c.Name).FirstOrDefault();
+			txb_email.Text = v.Email;
+			txb_description.Text = context.Descriptions.Where(co => co.Id == v.DescriptionId).Select(c => c.Name).FirstOrDefault();
+			txb_city.Text = context.Cities.Where(co => co.Id == v.CityId).Select(c => c.Name).FirstOrDefault();
+			txb_raport.Text = context.Raports.Where(co => co.Id == v.RaportId).Select(c => c.Name).FirstOrDefault();
+			txb_phone_work.Text = v.WorkPhone;
+			txb_phone_mobile.Text = v.PhoneNumber;
+			if (v.Status == "fact") v.Status = "factcorrect";
+			if (v.Status == "newfact") v.Status = "newfactcorrect";
+	//		context.SaveChanges();
+	///		this.Refresh();
+		}
+
+
 		private void btn_save_visitor_Click(object sender, EventArgs e)
 		{
 			if (txb_fname.Text != "" && txb_lname.Text != "" && txb_company.Text != "" && txb_position.Text != "" && txb_email.Text != "")
 			{
-				ExhibitionVisitor visitor = new ExhibitionVisitor();
 				visitor.LastName = txb_lname.Text;
 				visitor.FirstName = txb_fname.Text;
 				visitor.PhoneNumber = txb_phone_mobile.Text;
 				visitor.Email = txb_email.Text;
-				visitor.BarCode = getLastBarcode().ToString();
-				visitor.Status = "newfact";
+				if(visitor.BarCode == null) visitor.BarCode = getLastBarcode().ToString();
+				if(visitor.Status == null) visitor.Status = "newfact";
 				visitor.CityId = getCityId(txb_city.Text);
 				visitor.CompanyId = getCompanyId(txb_company.Text);
 				visitor.PositionId = getPositionId(txb_position.Text);

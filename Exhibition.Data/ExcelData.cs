@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Exhibition.Data.DataModel;
 using Microsoft.Office.Interop.Excel;
 
@@ -186,6 +187,46 @@ namespace Exhibition.Data
 			status = "get excel data to database";
 		}
 
+		public void saveDataToFile(DataGridView dgv_vasitors, ProgressBar pb)
+		{
+			SaveFileDialog sfd = new SaveFileDialog();
+			DialogResult res = sfd.ShowDialog();
+			if (res == DialogResult.OK)
+			{
+				string path = sfd.FileName + ".xlsx";
+				Microsoft.Office.Interop.Excel.Application exelapp = new Microsoft.Office.Interop.Excel.Application();
+				Microsoft.Office.Interop.Excel.Workbook workbook = exelapp.Workbooks.Add();
+				Microsoft.Office.Interop.Excel.Worksheet worksheet = workbook.ActiveSheet;
+
+				pb.Visible = true;
+				pb.Maximum = dgv_vasitors.RowCount-1;
+
+				worksheet.Rows[1].Columns[1] = "Имя";
+				worksheet.Rows[1].Columns[2] = "Фамилия";
+				worksheet.Rows[1].Columns[3] = "Отчество";
+				worksheet.Rows[1].Columns[4] = "Компания";
+				worksheet.Rows[1].Columns[5] = "Должность";
+				worksheet.Rows[1].Columns[6] = "Вы являетесь";
+				worksheet.Rows[1].Columns[7] = "Телефон мобильный";
+				worksheet.Rows[1].Columns[8] = "Телефон рабочий";
+				worksheet.Rows[1].Columns[9] = "E-Mail";
+				worksheet.Rows[1].Columns[10] = "Выставка";
+				worksheet.Rows[1].Columns[11] = "Выставка";
+				worksheet.Rows[1].Columns[12] = "Доклад";
+				worksheet.Rows[1].Columns[13] = "Город";
+
+				for (int i = 1; i < dgv_vasitors.RowCount; i++)
+				{
+					pb.Value = i;					
+	//				worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;					
+				}
+				pb.Visible = false;
+				exelapp.AlertBeforeOverwriting = false;
+				workbook.SaveAs(path);
+				exelapp.Quit();
+			}
+		}
+
 		public void createForDatabase()
 		{
 			using (ExhibitionDataForContext context = new ExhibitionDataForContext())
@@ -228,5 +269,6 @@ namespace Exhibition.Data
 			//			Console.WriteLine("Data send to database");
 			status = "create database";
 		}
+
 	}
 }
