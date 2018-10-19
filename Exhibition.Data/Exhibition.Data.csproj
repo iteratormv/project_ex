@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BizLayer\BizVisitor.cs" />
     <Compile Include="BizLayer\SettingStorage.cs" />
     <Compile Include="DataModel\City.cs" />
     <Compile Include="DataModel\Company.cs" />

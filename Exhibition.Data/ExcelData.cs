@@ -210,7 +210,7 @@ namespace Exhibition.Data
 				worksheet.Rows[1].Columns[7] = "Телефон мобильный";
 				worksheet.Rows[1].Columns[8] = "Телефон рабочий";
 				worksheet.Rows[1].Columns[9] = "E-Mail";
-				worksheet.Rows[1].Columns[10] = "Выставка";
+				worksheet.Rows[1].Columns[10] = "Дата";
 				worksheet.Rows[1].Columns[11] = "Выставка";
 				worksheet.Rows[1].Columns[12] = "Доклад";
 				worksheet.Rows[1].Columns[13] = "Город";
@@ -218,7 +218,21 @@ namespace Exhibition.Data
 				for (int i = 1; i < dgv_vasitors.RowCount; i++)
 				{
 					pb.Value = i;					
-	//				worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;					
+					worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
+					worksheet.Rows[i].Columns[2] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
+					worksheet.Rows[i].Columns[3] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
+					worksheet.Rows[i].Columns[4] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
+					worksheet.Rows[i].Columns[5] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
+					worksheet.Rows[i].Columns[6] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
+					worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
+					worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
+					worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
+					worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
+					worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
+					worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
+					worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
+					worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
+					worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
 				}
 				pb.Visible = false;
 				exelapp.AlertBeforeOverwriting = false;

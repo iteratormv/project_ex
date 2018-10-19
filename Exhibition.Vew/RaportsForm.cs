@@ -1,4 +1,5 @@
 ﻿using Exhibition.Data;
+using Exhibition.Data.BizLayer;
 using Exhibition.Data.DataModel;
 using System;
 using System.Collections.Generic;
@@ -35,27 +36,121 @@ namespace Exhibition.View
 			mode = m;
 
 			List<ExhibitionVisitor> visitor_collection = null;
+			List<BizVisitor> view_visitor_collection = null;
 			switch(mode){
 				case 1:
-					visitor_collection = context.ExhibitionVisitors.Where
-						(v => v.Status=="registered" || v.Status == "fact" || v.Status == "factcorrect").Select(s => s).ToList();
+					view_visitor_collection = context.ExhibitionVisitors.Where
+						(v => v.Status=="registered" || v.Status == "fact" || v.Status == "factcorrect").Select(s => new BizVisitor
+						{
+							vId = s.Id,
+							vLastName = s.LastName,
+							vFirstName = s.FirstName,
+							vPathronim = s.Pathronim,
+							vConpany = s.Company.Name,
+							vPosition = s.Position.Name,
+							vDescription = s.Description.Name,
+							vPhoneMobile = s.PhoneNumber,
+							vPhoneWork = s.WorkPhone,
+							vEmail = s.Email,
+							vRegDate = s.DateCreated.ToString(),
+							vExhibit = s.Exhibit.Name,
+							vRaport = s.Raport.Name,
+							vCity = s.City.Name
+						}).ToList();
 					break;
 				case 2:
-					visitor_collection = context.ExhibitionVisitors.Where
-						(v => v.Status == "fact" || v.Status == "factcorrect").Select(s => s).ToList();
-				break;
+					view_visitor_collection = context.ExhibitionVisitors.Where
+						(v => v.Status == "fact" || v.Status == "factcorrect").Select(s => new BizVisitor
+						{
+							vId = s.Id,
+							vLastName = s.LastName,
+							vFirstName = s.FirstName,
+							vPathronim = s.Pathronim,
+							vConpany = s.Company.Name,
+							vPosition = s.Position.Name,
+							vDescription = s.Description.Name,
+							vPhoneMobile = s.PhoneNumber,
+							vPhoneWork = s.WorkPhone,
+							vEmail = s.Email,
+							vRegDate = s.DateCreated.ToString(),
+							vExhibit = s.Exhibit.Name,
+							vRaport = s.Raport.Name,
+							vCity = s.City.Name
+						}).ToList();
+					break;
 				case 3:
-					visitor_collection = context.ExhibitionVisitors.Where
-						(v => v.Status == "newfact" || v.Status == "newfactcorrect").Select(s => s).ToList();
+					view_visitor_collection = context.ExhibitionVisitors.Where
+						(v => v.Status == "newfact" || v.Status == "newfactcorrect").Select(s => new BizVisitor
+						{
+							vId = s.Id,
+							vLastName = s.LastName,
+							vFirstName = s.FirstName,
+							vPathronim = s.Pathronim,
+							vConpany = s.Company.Name,
+							vPosition = s.Position.Name,
+							vDescription = s.Description.Name,
+							vPhoneMobile = s.PhoneNumber,
+							vPhoneWork = s.WorkPhone,
+							vEmail = s.Email,
+							vRegDate = s.DateCreated.ToString(),
+							vExhibit = s.Exhibit.Name,
+							vRaport = s.Raport.Name,
+							vCity = s.City.Name
+						}).ToList();
 					break;
 				case 4:
-					visitor_collection = context.ExhibitionVisitors.Where
-						(v => v.Status == "registered").Select(s => s).ToList();
+					view_visitor_collection = context.ExhibitionVisitors.Where
+						(v => v.Status == "registered").Select(s => new BizVisitor
+						{
+							vId = s.Id,
+							vLastName = s.LastName,
+							vFirstName = s.FirstName,
+							vPathronim = s.Pathronim,
+							vConpany = s.Company.Name,
+							vPosition = s.Position.Name,
+							vDescription = s.Description.Name,
+							vPhoneMobile = s.PhoneNumber,
+							vPhoneWork = s.WorkPhone,
+							vEmail = s.Email,
+							vRegDate = s.DateCreated.ToString(),
+							vExhibit = s.Exhibit.Name,
+							vRaport = s.Raport.Name,
+							vCity = s.City.Name
+						}).ToList();
 					break;
 			}
-			bsVisitors.DataSource = visitor_collection;
+			bsVisitors.DataSource = view_visitor_collection;
 			dgv_vasitors.DataSource = bsVisitors;
-			lbl_count.Text = visitor_collection.Count().ToString();
+
+			dgv_vasitors.Columns["vId"].Visible = false;
+			dgv_vasitors.Columns["vLastName"].HeaderText = "Фамилия";
+			dgv_vasitors.Columns["vLastName"].Width = 120;
+			dgv_vasitors.Columns["vFirstName"].HeaderText = "Имя";
+			dgv_vasitors.Columns["vFirstName"].Width = 120;
+			dgv_vasitors.Columns["vPathronim"].HeaderText = "Отчество";
+			dgv_vasitors.Columns["vPathronim"].Width = 120;
+			dgv_vasitors.Columns["vConpany"].HeaderText = "Компания";
+			dgv_vasitors.Columns["vConpany"].Width = 150;
+			dgv_vasitors.Columns["vPosition"].HeaderText = "Должность";
+			dgv_vasitors.Columns["vPosition"].Width = 150;
+			dgv_vasitors.Columns["vDescription"].HeaderText = "Вы являетесь";
+			dgv_vasitors.Columns["vDescription"].Width = 150;
+			dgv_vasitors.Columns["vPhoneMobile"].HeaderText = "Телефон мобильный";
+			dgv_vasitors.Columns["vPhoneMobile"].Width = 100;
+			dgv_vasitors.Columns["vPhoneWork"].HeaderText = "Телефон рабочий";
+			dgv_vasitors.Columns["vPhoneWork"].Width = 100;
+			dgv_vasitors.Columns["vEmail"].HeaderText = "E-Mail";
+			dgv_vasitors.Columns["vEmail"].Width = 150;
+			dgv_vasitors.Columns["vRegDate"].HeaderText = "Дата регистрации";
+			dgv_vasitors.Columns["vRegDate"].Width = 150;
+			dgv_vasitors.Columns["vExhibit"].HeaderText = "Выставка";
+			dgv_vasitors.Columns["vExhibit"].Width = 80;
+			dgv_vasitors.Columns["vRaport"].HeaderText = "Доклад";
+			dgv_vasitors.Columns["vRaport"].Width = 80;
+			dgv_vasitors.Columns["vCity"].HeaderText = "Город";
+			dgv_vasitors.Columns["vCity"].Width = 80;
+
+			lbl_count.Text = view_visitor_collection.Count().ToString();
 		}
 
 		private List<ExhibitionVisitor> GetDatabaseAllCollection()

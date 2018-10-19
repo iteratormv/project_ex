@@ -38,11 +38,55 @@ namespace Exhibition.View
 
 		private void initialDataGread()
 		{
-			List<ExhibitionVisitor> dgv_collection = null;
-			if(context.ExhibitionVisitors.Select(s=>s).Count()!=0) dgv_collection = context.ExhibitionVisitors.Where(e => 
-			(e.Status == "fact"||e.Status == "newfact"||e.Status == "factcorrect"||e.Status == "newfactcorrect")).ToList();
+			List<BizVisitor> dgv_collection = null;
+			if (context.ExhibitionVisitors.Select(s => s).Count() != 0) dgv_collection = context.ExhibitionVisitors.Where(e =>
+				 (e.Status == "fact" || e.Status == "newfact" || e.Status == "factcorrect" || e.Status == "newfactcorrect")).
+				 Select(s=> new BizVisitor
+				 {
+					 vId = s.Id,
+					 vLastName = s.LastName,
+					 vFirstName = s.FirstName,
+					 vPathronim = s.Pathronim,
+					 vConpany = s.Company.Name,
+					 vPosition = s.Position.Name,
+					 vDescription = s.Description.Name,
+					 vPhoneMobile = s.PhoneNumber,
+					 vPhoneWork = s.WorkPhone,
+					 vEmail = s.Email,
+					 vRegDate = s.DateCreated.ToString(),
+					 vExhibit = s.Exhibit.Name,
+					 vRaport = s.Raport.Name,
+					 vCity = s.City.Name
+				 }).ToList();
 			bs.DataSource = dgv_collection;
 			dgv_fakt_visitor.DataSource = bs;
+			dgv_fakt_visitor.Columns["vId"].Visible = false;
+			dgv_fakt_visitor.Columns["vLastName"].HeaderText = "Фамилия";
+			dgv_fakt_visitor.Columns["vLastName"].Width = 120;
+			dgv_fakt_visitor.Columns["vFirstName"].HeaderText = "Имя";
+			dgv_fakt_visitor.Columns["vFirstName"].Width = 120;
+			dgv_fakt_visitor.Columns["vPathronim"].HeaderText = "Отчество";
+			dgv_fakt_visitor.Columns["vPathronim"].Width = 120;
+			dgv_fakt_visitor.Columns["vConpany"].HeaderText = "Компания";
+			dgv_fakt_visitor.Columns["vConpany"].Width = 150;
+			dgv_fakt_visitor.Columns["vPosition"].HeaderText = "Должность";
+			dgv_fakt_visitor.Columns["vPosition"].Width = 150;
+			dgv_fakt_visitor.Columns["vDescription"].HeaderText = "Вы являетесь";
+			dgv_fakt_visitor.Columns["vDescription"].Width = 150;
+			dgv_fakt_visitor.Columns["vPhoneMobile"].HeaderText = "Телефон мобильный";
+			dgv_fakt_visitor.Columns["vPhoneMobile"].Width = 100;
+			dgv_fakt_visitor.Columns["vPhoneWork"].HeaderText = "Телефон рабочий";
+			dgv_fakt_visitor.Columns["vPhoneWork"].Width = 100;
+			dgv_fakt_visitor.Columns["vEmail"].HeaderText = "E-Mail";
+			dgv_fakt_visitor.Columns["vEmail"].Width = 150;
+			dgv_fakt_visitor.Columns["vRegDate"].HeaderText = "Дата регистрации";
+			dgv_fakt_visitor.Columns["vRegDate"].Width = 150;
+			dgv_fakt_visitor.Columns["vExhibit"].HeaderText = "Выставка";
+			dgv_fakt_visitor.Columns["vExhibit"].Width = 80;
+			dgv_fakt_visitor.Columns["vRaport"].HeaderText = "Доклад";
+			dgv_fakt_visitor.Columns["vRaport"].Width = 80;
+			dgv_fakt_visitor.Columns["vCity"].HeaderText = "Город";
+			dgv_fakt_visitor.Columns["vCity"].Width = 80;
 		}
 
 		private void mi_planed_visitors_Click(object sender, EventArgs e)
