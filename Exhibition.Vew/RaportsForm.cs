@@ -35,7 +35,7 @@ namespace Exhibition.View
 			cb_description.Text = "Все";
 			mode = m;
 
-			List<ExhibitionVisitor> visitor_collection = null;
+//			List<ExhibitionVisitor> visitor_collection = null;
 			List<BizVisitor> view_visitor_collection = null;
 			switch(mode){
 				case 1:
@@ -55,7 +55,9 @@ namespace Exhibition.View
 							vRegDate = s.DateCreated.ToString(),
 							vExhibit = s.Exhibit.Name,
 							vRaport = s.Raport.Name,
-							vCity = s.City.Name
+							vCity = s.City.Name,
+							vStatus = s.Status,
+							vBarcode = s.BarCode
 						}).ToList();
 					break;
 				case 2:
@@ -75,7 +77,9 @@ namespace Exhibition.View
 							vRegDate = s.DateCreated.ToString(),
 							vExhibit = s.Exhibit.Name,
 							vRaport = s.Raport.Name,
-							vCity = s.City.Name
+							vCity = s.City.Name,
+							vStatus = s.Status,
+							vBarcode = s.BarCode
 						}).ToList();
 					break;
 				case 3:
@@ -95,7 +99,9 @@ namespace Exhibition.View
 							vRegDate = s.DateCreated.ToString(),
 							vExhibit = s.Exhibit.Name,
 							vRaport = s.Raport.Name,
-							vCity = s.City.Name
+							vCity = s.City.Name,
+							vStatus = s.Status,
+							vBarcode = s.BarCode
 						}).ToList();
 					break;
 				case 4:
@@ -115,40 +121,45 @@ namespace Exhibition.View
 							vRegDate = s.DateCreated.ToString(),
 							vExhibit = s.Exhibit.Name,
 							vRaport = s.Raport.Name,
-							vCity = s.City.Name
+							vCity = s.City.Name,
+							vStatus = s.Status,
+							vBarcode = s.BarCode
 						}).ToList();
 					break;
 			}
 			bsVisitors.DataSource = view_visitor_collection;
-			dgv_vasitors.DataSource = bsVisitors;
+			dgv_visitors.DataSource = bsVisitors;
 
-			dgv_vasitors.Columns["vId"].Visible = false;
-			dgv_vasitors.Columns["vLastName"].HeaderText = "Фамилия";
-			dgv_vasitors.Columns["vLastName"].Width = 120;
-			dgv_vasitors.Columns["vFirstName"].HeaderText = "Имя";
-			dgv_vasitors.Columns["vFirstName"].Width = 120;
-			dgv_vasitors.Columns["vPathronim"].HeaderText = "Отчество";
-			dgv_vasitors.Columns["vPathronim"].Width = 120;
-			dgv_vasitors.Columns["vConpany"].HeaderText = "Компания";
-			dgv_vasitors.Columns["vConpany"].Width = 150;
-			dgv_vasitors.Columns["vPosition"].HeaderText = "Должность";
-			dgv_vasitors.Columns["vPosition"].Width = 150;
-			dgv_vasitors.Columns["vDescription"].HeaderText = "Вы являетесь";
-			dgv_vasitors.Columns["vDescription"].Width = 150;
-			dgv_vasitors.Columns["vPhoneMobile"].HeaderText = "Телефон мобильный";
-			dgv_vasitors.Columns["vPhoneMobile"].Width = 100;
-			dgv_vasitors.Columns["vPhoneWork"].HeaderText = "Телефон рабочий";
-			dgv_vasitors.Columns["vPhoneWork"].Width = 100;
-			dgv_vasitors.Columns["vEmail"].HeaderText = "E-Mail";
-			dgv_vasitors.Columns["vEmail"].Width = 150;
-			dgv_vasitors.Columns["vRegDate"].HeaderText = "Дата регистрации";
-			dgv_vasitors.Columns["vRegDate"].Width = 150;
-			dgv_vasitors.Columns["vExhibit"].HeaderText = "Выставка";
-			dgv_vasitors.Columns["vExhibit"].Width = 80;
-			dgv_vasitors.Columns["vRaport"].HeaderText = "Доклад";
-			dgv_vasitors.Columns["vRaport"].Width = 80;
-			dgv_vasitors.Columns["vCity"].HeaderText = "Город";
-			dgv_vasitors.Columns["vCity"].Width = 80;
+			dgv_visitors.Columns["vId"].Visible = false;
+			dgv_visitors.Columns["vLastName"].HeaderText = "Фамилия";
+			dgv_visitors.Columns["vLastName"].Width = 120;
+			dgv_visitors.Columns["vFirstName"].HeaderText = "Имя";
+			dgv_visitors.Columns["vFirstName"].Width = 120;
+			dgv_visitors.Columns["vPathronim"].HeaderText = "Отчество";
+			dgv_visitors.Columns["vPathronim"].Width = 120;
+			dgv_visitors.Columns["vConpany"].HeaderText = "Компания";
+			dgv_visitors.Columns["vConpany"].Width = 150;
+			dgv_visitors.Columns["vPosition"].HeaderText = "Должность";
+			dgv_visitors.Columns["vPosition"].Width = 150;
+			dgv_visitors.Columns["vDescription"].HeaderText = "Вы являетесь";
+			dgv_visitors.Columns["vDescription"].Width = 150;
+			dgv_visitors.Columns["vPhoneMobile"].HeaderText = "Телефон мобильный";
+			dgv_visitors.Columns["vPhoneMobile"].Width = 100;
+			dgv_visitors.Columns["vBarCode"].HeaderText = "Штрих код";
+			dgv_visitors.Columns["vBarCode"].Width = 100;
+			dgv_visitors.Columns["vPhoneWork"].HeaderText = "Телефон рабочий";
+			dgv_visitors.Columns["vPhoneWork"].Width = 100;
+			dgv_visitors.Columns["vEmail"].HeaderText = "E-Mail";
+			dgv_visitors.Columns["vEmail"].Width = 150;
+			dgv_visitors.Columns["vRegDate"].HeaderText = "Дата регистрации";
+			dgv_visitors.Columns["vRegDate"].Width = 150;
+			dgv_visitors.Columns["vExhibit"].HeaderText = "Выставка";
+			dgv_visitors.Columns["vExhibit"].Width = 80;
+			dgv_visitors.Columns["vRaport"].HeaderText = "Доклад";
+			dgv_visitors.Columns["vRaport"].Width = 80;
+			dgv_visitors.Columns["vCity"].HeaderText = "Город";
+			dgv_visitors.Columns["vCity"].Width = 80;
+			dgv_visitors.Columns["vStatus"].Visible = false;
 
 			lbl_count.Text = view_visitor_collection.Count().ToString();
 		}
@@ -161,48 +172,130 @@ namespace Exhibition.View
 
 		private void RaportsForm_SizeChanged(object sender, EventArgs e)
 		{
-			dgv_vasitors.Width = this.Width - 50;
-			dgv_vasitors.Height = this.Height - 150;
+			dgv_visitors.Width = this.Width - 50;
+			dgv_visitors.Height = this.Height - 150;
 		}
 
 		private void cb_description_TextChanged(object sender, EventArgs e)
 		{
 			if (mode != 0)
 			{
-				List<ExhibitionVisitor> visitor_collection = null;
+				List<ExhibitionVisitor> visitor_collection = new List<ExhibitionVisitor>();
 				List<ExhibitionVisitor> visitor_current_collection = null;
+				List<BizVisitor> view_visitor_collection = null;
+
+				var desription_id = context.Descriptions.Where(d => d.Name == cb_description.Text).Select(s => s.Id).FirstOrDefault();
+
 				switch (mode)
 				{
 					case 1:
-						visitor_collection = context.ExhibitionVisitors.Where
-							(v => v.Status == "registered" || v.Status == "fact" || v.Status == "factcorrect").Select(s => s).ToList();
+						view_visitor_collection = context.ExhibitionVisitors.Where
+							(v => v.Status == "registered" || v.Status == "fact" || v.Status == "factcorrect")
+							.Where
+					(d => d.DescriptionId == desription_id).Select(s => new BizVisitor
+					{
+						vId = s.Id,
+						vLastName = s.LastName,
+						vFirstName = s.FirstName,
+						vPathronim = s.Pathronim,
+						vConpany = s.Company.Name,
+						vPosition = s.Position.Name,
+						vDescription = s.Description.Name,
+						vPhoneMobile = s.PhoneNumber,
+						vPhoneWork = s.WorkPhone,
+						vEmail = s.Email,
+						vRegDate = s.DateCreated.ToString(),
+						vExhibit = s.Exhibit.Name,
+						vRaport = s.Raport.Name,
+						vCity = s.City.Name,
+						vStatus = s.Status,
+						vBarcode = s.BarCode
+					}).ToList();
 						break;
 					case 2:
-						visitor_collection = context.ExhibitionVisitors.Where
-							(v => v.Status == "fact" || v.Status == "factcorrect").Select(s => s).ToList();
+						view_visitor_collection = context.ExhibitionVisitors.Where
+							(v => v.Status == "fact" || v.Status == "factcorrect")
+							.Where
+					(d => d.DescriptionId == desription_id).Select(s => new BizVisitor
+					{
+						vId = s.Id,
+						vLastName = s.LastName,
+						vFirstName = s.FirstName,
+						vPathronim = s.Pathronim,
+						vConpany = s.Company.Name,
+						vPosition = s.Position.Name,
+						vDescription = s.Description.Name,
+						vPhoneMobile = s.PhoneNumber,
+						vPhoneWork = s.WorkPhone,
+						vEmail = s.Email,
+						vRegDate = s.DateCreated.ToString(),
+						vExhibit = s.Exhibit.Name,
+						vRaport = s.Raport.Name,
+						vCity = s.City.Name,
+						vStatus = s.Status,
+						vBarcode = s.BarCode
+					}).ToList();
 						break;
 					case 3:
-						visitor_collection = context.ExhibitionVisitors.Where
-							(v => v.Status == "newfact" || v.Status == "newfactcorrect").Select(s => s).ToList();
+						view_visitor_collection = context.ExhibitionVisitors.Where
+							(v => v.Status == "newfact" || v.Status == "newfactcorrect")
+							.Where
+					(d => d.DescriptionId == desription_id).Select(s => new BizVisitor
+					{
+						vId = s.Id,
+						vLastName = s.LastName,
+						vFirstName = s.FirstName,
+						vPathronim = s.Pathronim,
+						vConpany = s.Company.Name,
+						vPosition = s.Position.Name,
+						vDescription = s.Description.Name,
+						vPhoneMobile = s.PhoneNumber,
+						vPhoneWork = s.WorkPhone,
+						vEmail = s.Email,
+						vRegDate = s.DateCreated.ToString(),
+						vExhibit = s.Exhibit.Name,
+						vRaport = s.Raport.Name,
+						vCity = s.City.Name,
+						vStatus = s.Status,
+						vBarcode = s.BarCode
+					}).ToList();
 						break;
 					case 4:
-						visitor_collection = context.ExhibitionVisitors.Where
-							(v => v.Status == "registered").Select(s => s).ToList();
+						view_visitor_collection = context.ExhibitionVisitors.Where
+							(v => v.Status == "registered")
+							.Where
+					(d => d.DescriptionId == desription_id).Select(s => new BizVisitor
+					{
+						vId = s.Id,
+						vLastName = s.LastName,
+						vFirstName = s.FirstName,
+						vPathronim = s.Pathronim,
+						vConpany = s.Company.Name,
+						vPosition = s.Position.Name,
+						vDescription = s.Description.Name,
+						vPhoneMobile = s.PhoneNumber,
+						vPhoneWork = s.WorkPhone,
+						vEmail = s.Email,
+						vRegDate = s.DateCreated.ToString(),
+						vExhibit = s.Exhibit.Name,
+						vRaport = s.Raport.Name,
+						vCity = s.City.Name,
+						vStatus = s.Status,
+						vBarcode = s.BarCode
+					}).ToList();
 						break;
 				}
-				var desription_id = context.Descriptions.Where(d => d.Name == cb_description.Text).Select(s => s.Id).FirstOrDefault();
-				visitor_current_collection = visitor_collection.Where
-					(d => d.DescriptionId == desription_id).Select(s => s).ToList();
-				bsVisitors.DataSource = visitor_current_collection;
-				dgv_vasitors.DataSource = bsVisitors;
-				lbl_count.Text = visitor_current_collection.Count().ToString();
+
+				bsVisitors.DataSource = view_visitor_collection;
+				dgv_visitors.DataSource = bsVisitors;
+				lbl_count.Text = view_visitor_collection.Count().ToString();
 			}
 		}
 
 		private void btn_export_Click(object sender, EventArgs e)
 		{
 			ExelData data = new ExelData();
-			data.saveDataToFile(this.dgv_vasitors, this.progressBar1);
+			data.saveDataToFile(this.dgv_visitors, this.progressBar1);
 		}
 	}
 }

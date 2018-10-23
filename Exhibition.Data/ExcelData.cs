@@ -187,7 +187,7 @@ namespace Exhibition.Data
 			status = "get excel data to database";
 		}
 
-		public void saveDataToFile(DataGridView dgv_vasitors, ProgressBar pb)
+		public void saveDataToFile(DataGridView dgv_visitors, ProgressBar pb)
 		{
 			SaveFileDialog sfd = new SaveFileDialog();
 			DialogResult res = sfd.ShowDialog();
@@ -199,40 +199,40 @@ namespace Exhibition.Data
 				Microsoft.Office.Interop.Excel.Worksheet worksheet = workbook.ActiveSheet;
 
 				pb.Visible = true;
-				pb.Maximum = dgv_vasitors.RowCount-1;
+				pb.Maximum = dgv_visitors.RowCount-1;
 
 				worksheet.Rows[1].Columns[1] = "Имя";
 				worksheet.Rows[1].Columns[2] = "Фамилия";
 				worksheet.Rows[1].Columns[3] = "Отчество";
 				worksheet.Rows[1].Columns[4] = "Компания";
 				worksheet.Rows[1].Columns[5] = "Должность";
-				worksheet.Rows[1].Columns[6] = "Вы являетесь";
-				worksheet.Rows[1].Columns[7] = "Телефон мобильный";
-				worksheet.Rows[1].Columns[8] = "Телефон рабочий";
-				worksheet.Rows[1].Columns[9] = "E-Mail";
-				worksheet.Rows[1].Columns[10] = "Дата";
-				worksheet.Rows[1].Columns[11] = "Выставка";
-				worksheet.Rows[1].Columns[12] = "Доклад";
-				worksheet.Rows[1].Columns[13] = "Город";
+				worksheet.Rows[1].Columns[6] = "Штрихкод";
+				worksheet.Rows[1].Columns[7] = "Вы являетесь";
+				worksheet.Rows[1].Columns[8] = "Телефон мобильный";
+				worksheet.Rows[1].Columns[9] = "Телефон рабочий";
+				worksheet.Rows[1].Columns[10] = "E-Mail";
+				worksheet.Rows[1].Columns[11] = "Дата";
+				worksheet.Rows[1].Columns[12] = "Выставка";
+				worksheet.Rows[1].Columns[13] = "Доклад";
+				worksheet.Rows[1].Columns[14] = "Город";
 
-				for (int i = 1; i < dgv_vasitors.RowCount; i++)
+				for (int i = 1; i < dgv_visitors.RowCount; i++)
 				{
 					pb.Value = i;					
-					worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
-					worksheet.Rows[i].Columns[2] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
-					worksheet.Rows[i].Columns[3] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
-					worksheet.Rows[i].Columns[4] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
-					worksheet.Rows[i].Columns[5] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
-					worksheet.Rows[i].Columns[6] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
-					worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
-					worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
-					worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
-					worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
-					worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
-					worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
-					worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
-					worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
-					worksheet.Rows[i].Columns[1] = dgv_vasitors.Rows[i - 1].Cells[0].Value;
+					worksheet.Rows[i+1].Columns[1] = dgv_visitors.Rows[i - 1].Cells[1].Value;
+					worksheet.Rows[i+1].Columns[2] = dgv_visitors.Rows[i - 1].Cells[2].Value;
+					worksheet.Rows[i+1].Columns[3] = dgv_visitors.Rows[i - 1].Cells[3].Value;
+					worksheet.Rows[i+1].Columns[4] = dgv_visitors.Rows[i - 1].Cells[4].Value;
+					worksheet.Rows[i+1].Columns[5] = dgv_visitors.Rows[i - 1].Cells[5].Value;
+					worksheet.Rows[i+1].Columns[6] = dgv_visitors.Rows[i - 1].Cells[6].Value;
+					worksheet.Rows[i+1].Columns[7] = dgv_visitors.Rows[i - 1].Cells[7].Value;
+					worksheet.Rows[i+1].Columns[8] = dgv_visitors.Rows[i - 1].Cells[8].Value;
+					worksheet.Rows[i+1].Columns[9] = dgv_visitors.Rows[i - 1].Cells[9].Value;
+					worksheet.Rows[i+1].Columns[10] = dgv_visitors.Rows[i - 1].Cells[10].Value;
+					worksheet.Rows[i+1].Columns[11] = dgv_visitors.Rows[i - 1].Cells[11].Value;
+					worksheet.Rows[i+1].Columns[12] = dgv_visitors.Rows[i - 1].Cells[12].Value;
+					worksheet.Rows[i+1].Columns[13] = dgv_visitors.Rows[i - 1].Cells[13].Value;
+					worksheet.Rows[i+1].Columns[14] = dgv_visitors.Rows[i - 1].Cells[14].Value;
 				}
 				pb.Visible = false;
 				exelapp.AlertBeforeOverwriting = false;

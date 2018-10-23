@@ -56,7 +56,8 @@ namespace Exhibition.View
 					 vRegDate = s.DateCreated.ToString(),
 					 vExhibit = s.Exhibit.Name,
 					 vRaport = s.Raport.Name,
-					 vCity = s.City.Name
+					 vCity = s.City.Name,
+					 vBarcode = s.BarCode
 				 }).ToList();
 			bs.DataSource = dgv_collection;
 			dgv_fakt_visitor.DataSource = bs;
@@ -169,7 +170,24 @@ namespace Exhibition.View
 		{
 			select_visitor.Status = "fact";
 			select_visitor.DateCreated = DateTime.Now;
-			bs.Add(select_visitor);
+			BizVisitor b_select_visitor = new BizVisitor();
+			b_select_visitor.vId = select_visitor.Id;
+			b_select_visitor.vLastName = select_visitor.LastName;
+			b_select_visitor.vFirstName = select_visitor.FirstName;
+			b_select_visitor.vPathronim = select_visitor.Pathronim;
+			b_select_visitor.vConpany = context.Companies.Where(c => c.Id == select_visitor.CompanyId).Select(s => s.Name).FirstOrDefault();
+			b_select_visitor.vPosition = context.Positions.Where(p => p.Id == select_visitor.PositionId).Select(s => s.Name).FirstOrDefault();
+			b_select_visitor.vDescription = context.Descriptions.Where(d => d.Id == select_visitor.DescriptionId).Select(s => s.Name).FirstOrDefault();
+			b_select_visitor.vPhoneMobile = select_visitor.PhoneNumber;
+			b_select_visitor.vPhoneWork = select_visitor.WorkPhone;
+			b_select_visitor.vEmail = select_visitor.Email;
+			b_select_visitor.vRegDate = select_visitor.DateCreated.ToString();
+			b_select_visitor.vExhibit = context.Exhibits.Where(e => e.Id == select_visitor.ExhibitId).Select(s => s.Name).FirstOrDefault();
+			b_select_visitor.vRaport = context.Raports.Where(r => r.Id == select_visitor.RaportId).Select(s => s.Name).FirstOrDefault();
+			b_select_visitor.vCity = context.Cities.Where(c => c.Id == select_visitor.CityId).Select(s => s.Name).FirstOrDefault();
+			b_select_visitor.vStatus = select_visitor.Status;
+			b_select_visitor.vBarcode = select_visitor.BarCode;
+			bs.Add(b_select_visitor);
 			context.SaveChanges();
 			var cl = context.Descriptions.Where(d => d.Id == select_visitor.DescriptionId).Select(s => s.Color).FirstOrDefault();
 			var col = Color.FromName(cl);
@@ -182,7 +200,31 @@ namespace Exhibition.View
 		public void addVisitorToFact(ExhibitionVisitor select_visitor, string status)
 		{
 			this.select_visitor = select_visitor;
-			if(!bs.Contains(select_visitor)) bs.Add(select_visitor);
+			BizVisitor b_select_visitor = new BizVisitor();
+			b_select_visitor.vId = select_visitor.Id;
+			b_select_visitor.vLastName = select_visitor.LastName;
+			b_select_visitor.vFirstName = select_visitor.FirstName;
+			b_select_visitor.vPathronim = select_visitor.Pathronim;
+			b_select_visitor.vConpany = context.Companies.Where(s => 
+			s.Id == select_visitor.CompanyId).Select(v => v.Name).FirstOrDefault();
+			b_select_visitor.vPosition = context.Positions.Where(s =>
+			s.Id == select_visitor.PositionId).Select(v => v.Name).FirstOrDefault();
+			b_select_visitor.vDescription = context.Descriptions.Where(s =>
+			s.Id == select_visitor.DescriptionId).Select(v => v.Name).FirstOrDefault();
+			b_select_visitor.vPhoneMobile = select_visitor.PhoneNumber;
+			b_select_visitor.vPhoneWork = select_visitor.WorkPhone;
+			b_select_visitor.vEmail = select_visitor.Email;
+			b_select_visitor.vRegDate = select_visitor.DateCreated.ToString();
+			b_select_visitor.vExhibit = context.Exhibits.Where(s =>
+			s.Id == select_visitor.ExhibitId).Select(v => v.Name).FirstOrDefault();
+			b_select_visitor.vRaport = context.Raports.Where(s =>
+			s.Id == select_visitor.RaportId).Select(v => v.Name).FirstOrDefault();
+			b_select_visitor.vCity = context.Cities.Where(s =>
+			s.Id == select_visitor.CityId).Select(v => v.Name).FirstOrDefault();
+			if (!bs.Contains(b_select_visitor))
+			{
+				bs.Add(b_select_visitor);
+			}
 			context.ExhibitionVisitors.AddOrUpdate(select_visitor);
 			context.SaveChanges();
 			var cl = context.Descriptions.Where(d => d.Id == select_visitor.DescriptionId).Select(s => s.Color).FirstOrDefault();
@@ -348,7 +390,7 @@ namespace Exhibition.View
 
 		private void dgv_fakt_visitor_DoubleClick(object sender, EventArgs e)
 		{
-			var cur_visitor = bs.Current as ExhibitionVisitor;
+			var cur_visitor = bs.Current as BizVisitor;
 			CreateVisitorForm cv_form = new CreateVisitorForm(this, cur_visitor);
 			cv_form.ShowDialog();
 			this.Refresh();
@@ -382,6 +424,18 @@ namespace Exhibition.View
 		{
 			dgv_fakt_visitor.Width = this.Width - 60;
 			dgv_fakt_visitor.Height = this.Height - 230;
+		}
+
+		private void dgv_fakt_visitor_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				var cur_visitor = bs.Current as BizVisitor;
+				CreateVisitorForm cv_form = new CreateVisitorForm(this, cur_visitor);
+				cv_form.ShowDialog();
+				this.Refresh();
+			}
+
 		}
 	}
 }

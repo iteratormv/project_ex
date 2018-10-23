@@ -14,6 +14,7 @@ namespace Exhibition.Data.BizLayer
 		public string vPathronim { get; set; }
 		public string vConpany { get; set; }
 		public string vPosition { get; set; }
+		public string vBarcode { get; set; }
 		public string vDescription { get; set; }
 		public string vPhoneMobile { get; set; }
 		public string vPhoneWork { get; set; }
@@ -22,5 +23,6 @@ namespace Exhibition.Data.BizLayer
 		public string vExhibit { get; set; }
 		public string vRaport { get; set; }
 		public string vCity { get; set; }
+		public string vStatus { get; set; }
 	}
 }

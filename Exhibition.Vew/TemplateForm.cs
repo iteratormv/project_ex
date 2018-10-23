@@ -68,9 +68,7 @@ namespace Exhibition.Vew
 
 			cmb_setting_name.DataSource = settings.Select(s=>s.SettingName).ToList();
 			cmb_setting_name.Text = currentSettingName;
-		//	cmb_font_firstname.Text = currentSetting.FontNameNA + "-" + currentSetting.FontSizeNA + "-" + currentSetting.FontStyleNA;
 			cmb_font_lastname.Text = currentSetting.FontNameNA + "-" + currentSetting.FontSizeNA + "-" + currentSetting.FontStyleNA;
-		//	cmb_font_pathronim.Text = currentSetting.FontPA;
 			cmb_font_company.Text = currentSetting.FontNameCO + "-" + currentSetting.FontSizeCO + "-" + currentSetting.FontStyleCO;
 			cmb_font_position.Text = currentSetting.FontNamePO + "-" + currentSetting.FontSizePO + "-" + currentSetting.FontStylePO;
 			cb_firstname.Checked = currentSetting.isFNvisible;
@@ -116,6 +114,7 @@ namespace Exhibition.Vew
 		{
 			var ss = cmb_setting_name.Text;
 			tss.setCS(ss);
+			MessageBox.Show("Конфигурация " + ss + "применена");
 		}
 
 		private void cmb_setting_name_DropDownClosed(object sender, EventArgs e)

@@ -45,7 +45,6 @@
 			this.label9 = new System.Windows.Forms.Label();
 			this.txb_email = new System.Windows.Forms.TextBox();
 			this.label10 = new System.Windows.Forms.Label();
-			this.txb_description = new System.Windows.Forms.TextBox();
 			this.label11 = new System.Windows.Forms.Label();
 			this.txb_city = new System.Windows.Forms.TextBox();
 			this.label12 = new System.Windows.Forms.Label();
@@ -57,6 +56,7 @@
 			this.label15 = new System.Windows.Forms.Label();
 			this.btn_save_visitor = new System.Windows.Forms.Button();
 			this.lbl_validator = new System.Windows.Forms.Label();
+			this.cb_description = new System.Windows.Forms.ComboBox();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -201,13 +201,6 @@
 			this.label10.TabIndex = 17;
 			this.label10.Text = "E-mail:*";
 			// 
-			// txb_description
-			// 
-			this.txb_description.Location = new System.Drawing.Point(147, 293);
-			this.txb_description.Name = "txb_description";
-			this.txb_description.Size = new System.Drawing.Size(252, 20);
-			this.txb_description.TabIndex = 20;
-			// 
 			// label11
 			// 
 			this.label11.AutoSize = true;
@@ -300,11 +293,21 @@
 			this.lbl_validator.TabIndex = 30;
 			this.lbl_validator.Text = "* - поля обязательные для заполнения";
 			// 
+			// cb_description
+			// 
+			this.cb_description.FormattingEnabled = true;
+			this.cb_description.Location = new System.Drawing.Point(147, 293);
+			this.cb_description.Name = "cb_description";
+			this.cb_description.Size = new System.Drawing.Size(252, 21);
+			this.cb_description.TabIndex = 31;
+			// 
 			// CreateVisitorForm
 			// 
+			this.AcceptButton = this.btn_save_visitor;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(435, 515);
+			this.Controls.Add(this.cb_description);
 			this.Controls.Add(this.lbl_validator);
 			this.Controls.Add(this.btn_save_visitor);
 			this.Controls.Add(this.txb_phone_mobile);
@@ -315,7 +318,6 @@
 			this.Controls.Add(this.label13);
 			this.Controls.Add(this.txb_city);
 			this.Controls.Add(this.label12);
-			this.Controls.Add(this.txb_description);
 			this.Controls.Add(this.label11);
 			this.Controls.Add(this.txb_email);
 			this.Controls.Add(this.label10);
@@ -360,7 +362,6 @@
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.TextBox txb_email;
 		private System.Windows.Forms.Label label10;
-		private System.Windows.Forms.TextBox txb_description;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.TextBox txb_city;
 		private System.Windows.Forms.Label label12;
@@ -372,5 +373,6 @@
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.Button btn_save_visitor;
 		private System.Windows.Forms.Label lbl_validator;
+		private System.Windows.Forms.ComboBox cb_description;
 	}
 }

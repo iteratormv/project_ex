@@ -28,22 +28,22 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.dgv_vasitors = new System.Windows.Forms.DataGridView();
+			this.dgv_visitors = new System.Windows.Forms.DataGridView();
 			this.cb_description = new System.Windows.Forms.ComboBox();
 			this.btn_export = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
 			this.lbl_count = new System.Windows.Forms.Label();
 			this.progressBar1 = new System.Windows.Forms.ProgressBar();
-			((System.ComponentModel.ISupportInitialize)(this.dgv_vasitors)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.dgv_visitors)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// dgv_vasitors
+			// dgv_visitors
 			// 
-			this.dgv_vasitors.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dgv_vasitors.Location = new System.Drawing.Point(12, 89);
-			this.dgv_vasitors.Name = "dgv_vasitors";
-			this.dgv_vasitors.Size = new System.Drawing.Size(776, 381);
-			this.dgv_vasitors.TabIndex = 1;
+			this.dgv_visitors.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dgv_visitors.Location = new System.Drawing.Point(12, 89);
+			this.dgv_visitors.Name = "dgv_visitors";
+			this.dgv_visitors.Size = new System.Drawing.Size(776, 381);
+			this.dgv_visitors.TabIndex = 1;
 			// 
 			// cb_description
 			// 
@@ -101,12 +101,12 @@
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.btn_export);
 			this.Controls.Add(this.cb_description);
-			this.Controls.Add(this.dgv_vasitors);
+			this.Controls.Add(this.dgv_visitors);
 			this.Name = "RaportsForm";
 			this.Text = "Отчёт";
 			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
 			this.SizeChanged += new System.EventHandler(this.RaportsForm_SizeChanged);
-			((System.ComponentModel.ISupportInitialize)(this.dgv_vasitors)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.dgv_visitors)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -114,7 +114,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.DataGridView dgv_vasitors;
+		private System.Windows.Forms.DataGridView dgv_visitors;
 		private System.Windows.Forms.ComboBox cb_description;
 		private System.Windows.Forms.Button btn_export;
 		private System.Windows.Forms.Label label1;

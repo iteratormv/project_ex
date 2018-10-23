@@ -203,6 +203,7 @@
 			this.dgv_fakt_visitor.Size = new System.Drawing.Size(1123, 434);
 			this.dgv_fakt_visitor.TabIndex = 5;
 			this.dgv_fakt_visitor.DoubleClick += new System.EventHandler(this.dgv_fakt_visitor_DoubleClick);
+			this.dgv_fakt_visitor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgv_fakt_visitor_KeyDown);
 			// 
 			// printDocument1
 			// 

@@ -1,4 +1,5 @@
-﻿using Exhibition.Data.DataModel;
+﻿using Exhibition.Data.BizLayer;
+using Exhibition.Data.DataModel;
 using Exhibition.View;
 using System;
 using System.Collections.Generic;
@@ -29,35 +30,38 @@ namespace Exhibition.Vew
 			cmb_exhebition.ValueMember = "Id";
 			need_print = false;
 			create_form = f;
+			cb_description.DataSource = context.Descriptions.Select(s => s).ToList();
+			cb_description.DisplayMember = "Name";
+			cb_description.ValueMember = "Id";
+			cb_description.Text = "ИТ-компания";
 		}
 
-
-		public CreateVisitorForm(GeneralForm f, ExhibitionVisitor v)
+		public CreateVisitorForm(GeneralForm f, BizVisitor v)
 		{
-			visitor = v;
+			visitor = new ExhibitionVisitor();
 			InitializeComponent();
+			visitor = context.ExhibitionVisitors.Where(vi => vi.BarCode == v.vBarcode).Select(s => s).FirstOrDefault();
 			cmb_exhebition.DataSource = context.Exhibits.Where(vi => vi.Name != "none").Select(s => s).ToList();
 			cmb_exhebition.DisplayMember = "Name";
 			cmb_exhebition.ValueMember = "Id";
 			need_print = false;
 			create_form = f;
-			txb_lname.Text = v.LastName;
-			txb_fname.Text = v.FirstName;
-			txb_pathronim.Text = v.Pathronim;
-			txb_company.Text = context.Companies.Where(co => co.Id == v.CompanyId).Select(c => c.Name).FirstOrDefault();
-			txb_position.Text = context.Positions.Where(co => co.Id == v.PositionId).Select(c => c.Name).FirstOrDefault();
-			txb_email.Text = v.Email;
-			txb_description.Text = context.Descriptions.Where(co => co.Id == v.DescriptionId).Select(c => c.Name).FirstOrDefault();
-			txb_city.Text = context.Cities.Where(co => co.Id == v.CityId).Select(c => c.Name).FirstOrDefault();
-			txb_raport.Text = context.Raports.Where(co => co.Id == v.RaportId).Select(c => c.Name).FirstOrDefault();
-			txb_phone_work.Text = v.WorkPhone;
-			txb_phone_mobile.Text = v.PhoneNumber;
-			if (v.Status == "fact") v.Status = "factcorrect";
-			if (v.Status == "newfact") v.Status = "newfactcorrect";
+			txb_lname.Text = v.vLastName;
+			txb_fname.Text = v.vFirstName;
+			txb_pathronim.Text = v.vPathronim;
+			txb_company.Text = v.vConpany;
+			txb_position.Text = v.vPosition;
+			txb_email.Text = v.vEmail;
+			cb_description.Text = v.vDescription;
+			txb_city.Text = v.vCity;
+			txb_raport.Text = v.vRaport;
+			txb_phone_work.Text = v.vPhoneWork;
+			txb_phone_mobile.Text = v.vPhoneMobile;
+			if (v.vStatus == "fact") v.vStatus = "factcorrect";
+			if (v.vStatus == "newfact") v.vStatus = "newfactcorrect";
 	//		context.SaveChanges();
 	///		this.Refresh();
 		}
-
 
 		private void btn_save_visitor_Click(object sender, EventArgs e)
 		{
@@ -73,7 +77,7 @@ namespace Exhibition.Vew
 				visitor.CompanyId = getCompanyId(txb_company.Text);
 				visitor.PositionId = getPositionId(txb_position.Text);
 				visitor.ExhibitId = getExhibitId(cmb_exhebition.Text);
-				visitor.DescriptionId = getDescriptionId(txb_description.Text);
+				visitor.DescriptionId = getDescriptionId(cb_description.Text);
 				visitor.RaportId = getRaportId(txb_raport.Text);
 				visitor.DateCreated = DateTime.Now;
 				if (txb_phone_work.Text != "") { visitor.WorkPhone = txb_phone_work.Text; }
@@ -211,5 +215,6 @@ namespace Exhibition.Vew
 				}
 			}
 		}
+
 	}
 }
