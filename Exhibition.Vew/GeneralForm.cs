@@ -32,7 +32,7 @@ namespace Exhibition.View
 			initialDataGread();
 			ss = new SettingStorage();
 			templForm = new TemplateForm(ss);
-			var count = context.ExhibitionVisitors.Where(v => v.Status != "registered").Select(s => s).Count();
+			var count = context.ExhibitionVisitors.Where(v => v.Status != "registered").Select(s => s).Count() - 1;
 			lb_count.Text = count.ToString();
 		}
 
@@ -102,12 +102,16 @@ namespace Exhibition.View
 			if (s.ShowDialog() == DialogResult.Cancel) return;
 			string filename = s.FileName;
 
-			data = new ExelData(filename);
+			data = new ExelData(filename, this.pb_exel_to_db);
+
 
 			data.createForDatabase();
-			data.getForDataToDatabase();
+  //		data.getForDataToDatabase();
+            data.getForDataToDatabase(this.pb_exel_to_db);
 
-		}
+            pb_exel_to_db.Visible = false;
+
+        }
 
 		private void cb_code_TextChanged(object sender, EventArgs e)
 		{
@@ -187,11 +191,12 @@ namespace Exhibition.View
 			b_select_visitor.vCity = context.Cities.Where(c => c.Id == select_visitor.CityId).Select(s => s.Name).FirstOrDefault();
 			b_select_visitor.vStatus = select_visitor.Status;
 			b_select_visitor.vBarcode = select_visitor.BarCode;
+            
 			bs.Add(b_select_visitor);
 			context.SaveChanges();
 			var cl = context.Descriptions.Where(d => d.Id == select_visitor.DescriptionId).Select(s => s.Color).FirstOrDefault();
 			var col = Color.FromName(cl);
-			var count = context.ExhibitionVisitors.Where(v => v.Status != "registered").Select(s => s).Count();
+			var count = context.ExhibitionVisitors.Where(v => v.Status != "registered").Select(s => s).Count() - 1;
 			lb_count.Text = count.ToString();
 			pb_color.BackColor = col;
 			printVisitor();
@@ -229,7 +234,7 @@ namespace Exhibition.View
 			context.SaveChanges();
 			var cl = context.Descriptions.Where(d => d.Id == select_visitor.DescriptionId).Select(s => s.Color).FirstOrDefault();
 			var col = Color.FromName(cl);
-			var count = context.ExhibitionVisitors.Where(v => v.Status != "registered").Select(s => s).Count();
+			var count = context.ExhibitionVisitors.Where(v => v.Status != "registered").Select(s => s).Count() - 1;
 			lb_count.Text = count.ToString();
 			pb_color.BackColor = col;
 			printVisitor();
@@ -272,13 +277,26 @@ namespace Exhibition.View
 			posYcompany = (int)(height / 22 * 10);
 			posYposition = (int)(height / 14 * 10);
 
-			string print_name = "";
+
+            string print_first_name = select_visitor.FirstName;
+            string print_last_name = select_visitor.LastName;
+            string print_pathronim = select_visitor.Pathronim;
+            string print_company = context.Companies.Where(v => v.Id == select_visitor.CompanyId).Select(v => v.Name).FirstOrDefault();
+            string print_position = context.Positions.Where(p => p.Id == select_visitor.PositionId).Select(p => p.Name).FirstOrDefault();
+
+            if (ss.lts.Where(s => s.SettingName == current_setting_name).Select(c => c.isFNtoupper).FirstOrDefault()) { print_first_name = print_first_name.ToUpper(); }
+            if (ss.lts.Where(s => s.SettingName == current_setting_name).Select(c => c.isLNtoupper).FirstOrDefault()) { print_last_name = print_last_name.ToUpper(); }
+            if (ss.lts.Where(s => s.SettingName == current_setting_name).Select(c => c.isPAtoupper).FirstOrDefault()) { print_pathronim = print_pathronim.ToUpper(); }
+            if (ss.lts.Where(s => s.SettingName == current_setting_name).Select(c => c.isPOtoupper).FirstOrDefault()) { print_position = print_position.ToUpper(); }
+            if (ss.lts.Where(s => s.SettingName == current_setting_name).Select(c => c.isCOtoupper).FirstOrDefault()) { print_company = print_company.ToUpper(); }
+
+            string print_name = "";
 			if (ss.lts.Where(s => s.SettingName == current_setting_name)
-				.Select(c => c.isLNvisible).FirstOrDefault()) print_name += select_visitor.LastName + " ";
+				.Select(c => c.isLNvisible).FirstOrDefault()) print_name += print_last_name + " ";
 			if (ss.lts.Where(s => s.SettingName == current_setting_name)
-				.Select(c => c.isFNvisible).FirstOrDefault()) print_name += select_visitor.FirstName + " ";
+				.Select(c => c.isFNvisible).FirstOrDefault()) print_name += print_first_name + " ";
 			if (ss.lts.Where(s => s.SettingName == current_setting_name)
-				.Select(c => c.isPAvisible).FirstOrDefault()) print_name += select_visitor.Pathronim;
+				.Select(c => c.isPAvisible).FirstOrDefault()) print_name += print_pathronim;
 
 			if (print_name != "")
 			{
@@ -300,7 +318,7 @@ namespace Exhibition.View
 			{
 				if (select_visitor.CompanyId!=1)
 				{
-					string print_company = context.Companies.Where(v=>v.Id == select_visitor.CompanyId).Select(v=>v.Name).FirstOrDefault();
+					
 					string[] print_companys = print_company.Split(' ');
 					FontFamily cff = new FontFamily(settings.FontNameCO);
 					FontStyle сfs = (FontStyle)settings.FontStyleCO;
@@ -319,7 +337,7 @@ namespace Exhibition.View
 			{
 				if (select_visitor.PositionId != 1)
 				{
-					string print_position = context.Positions.Where(p=>p.Id == select_visitor.PositionId).Select(p=>p.Name).FirstOrDefault();
+					
 					string[] print_positions = print_position.Split(' ');
 					FontFamily pff = new FontFamily(settings.FontNamePO);
 					FontStyle pfs = (FontStyle)settings.FontStylePO;

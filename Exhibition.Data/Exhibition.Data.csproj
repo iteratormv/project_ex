@@ -69,13 +69,9 @@
     <Compile Include="DataModel\Position.cs" />
     <Compile Include="DataModel\Raport.cs" />
     <Compile Include="ExcelData.cs" />
-    <Compile Include="Migrations\201810050852328_InitialCreate.cs" />
-    <Compile Include="Migrations\201810050852328_InitialCreate.Designer.cs">
-      <DependentUpon>201810050852328_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201810100747159_date_created.cs" />
-    <Compile Include="Migrations\201810100747159_date_created.Designer.cs">
-      <DependentUpon>201810100747159_date_created.cs</DependentUpon>
+    <Compile Include="Migrations\201810301138322_isUpper.cs" />
+    <Compile Include="Migrations\201810301138322_isUpper.Designer.cs">
+      <DependentUpon>201810301138322_isUpper.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,11 +86,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201810050852328_InitialCreate.resx">
-      <DependentUpon>201810050852328_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810100747159_date_created.resx">
-      <DependentUpon>201810100747159_date_created.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201810301138322_isUpper.resx">
+      <DependentUpon>201810301138322_isUpper.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

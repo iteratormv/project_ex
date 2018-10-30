@@ -7,13 +7,13 @@ namespace Exhibition.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class date_created : IMigrationMetadata
+    public sealed partial class isUpper : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(date_created));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(isUpper));
         
         string IMigrationMetadata.Id
         {
-            get { return "201810100747159_date_created"; }
+            get { return "201810301138322_isUpper"; }
         }
         
         string IMigrationMetadata.Source

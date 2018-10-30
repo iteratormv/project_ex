@@ -42,7 +42,14 @@ namespace Exhibition.Vew
 			setting.isPAvisible = cb_patronim.Checked;
 			setting.isCOvisible = cb_company.Checked;
 			setting.isPOvisible = cb_position.Checked;
-			setting.FontNameNA = font_names[0];
+
+            setting.isFNtoupper = chb_first_name_to_upper.Checked;
+            setting.isLNtoupper = chb_last_name_to_upper.Checked;
+            setting.isPAtoupper = chb_pathronim_to_upper.Checked;
+            setting.isCOtoupper = chb_company_to_upper.Checked;
+            setting.isPOtoupper = chb_position_to_upper.Checked;
+
+            setting.FontNameNA = font_names[0];
 			setting.FontNameCO = font_companies[0];
 			setting.FontNamePO = font_positions[0];
 			setting.FontSizeNA = float.Parse(font_names[1]);
@@ -71,6 +78,13 @@ namespace Exhibition.Vew
 			cmb_font_lastname.Text = currentSetting.FontNameNA + "-" + currentSetting.FontSizeNA + "-" + currentSetting.FontStyleNA;
 			cmb_font_company.Text = currentSetting.FontNameCO + "-" + currentSetting.FontSizeCO + "-" + currentSetting.FontStyleCO;
 			cmb_font_position.Text = currentSetting.FontNamePO + "-" + currentSetting.FontSizePO + "-" + currentSetting.FontStylePO;
+
+            chb_first_name_to_upper.Checked = currentSetting.isFNtoupper;
+            chb_last_name_to_upper.Checked = currentSetting.isLNtoupper;
+            chb_pathronim_to_upper.Checked = currentSetting.isPAtoupper;
+            chb_position_to_upper.Checked = currentSetting.isPOtoupper;
+            chb_company_to_upper.Checked = currentSetting.isCOtoupper;
+
 			cb_firstname.Checked = currentSetting.isFNvisible;
 			cb_lasname.Checked = currentSetting.isLNvisible;
 			cb_patronim.Checked = currentSetting.isPAvisible;
@@ -152,10 +166,5 @@ namespace Exhibition.Vew
 				cmb_font_position.Text = fd.Font.Name + "-" + fd.Font.Size + "-" + (int)fd.Font.Style;
 			}
 		}
-
-		private void label2_Click(object sender, EventArgs e)
-		{
-
-		}
-	}
+    }
 }

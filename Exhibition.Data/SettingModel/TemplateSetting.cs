@@ -20,7 +20,13 @@ namespace Exhibition.Data.SettingModel
 		public bool isCOvisible { get; set; }
 		public bool isCanDelete { get; set; }
 
-		public string FontNameNA { get; set; }
+        public bool isFNtoupper { get; set; }
+        public bool isLNtoupper { get; set; }
+        public bool isPAtoupper { get; set; }
+        public bool isPOtoupper { get; set; }
+        public bool isCOtoupper { get; set; }
+
+        public string FontNameNA { get; set; }
 		public string FontNamePO { get; set; }
 		public string FontNameCO { get; set; }
 
