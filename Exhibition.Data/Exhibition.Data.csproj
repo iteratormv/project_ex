@@ -69,11 +69,6 @@
     <Compile Include="DataModel\Position.cs" />
     <Compile Include="DataModel\Raport.cs" />
     <Compile Include="ExcelData.cs" />
-    <Compile Include="Migrations\201810301138322_isUpper.cs" />
-    <Compile Include="Migrations\201810301138322_isUpper.Designer.cs">
-      <DependentUpon>201810301138322_isUpper.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingModel\CurrentSetting.cs" />
     <Compile Include="SettingModel\ExhibitionSettingContext.cs" />
@@ -86,9 +81,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201810301138322_isUpper.resx">
-      <DependentUpon>201810301138322_isUpper.cs</DependentUpon>
-    </EmbeddedResource>
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

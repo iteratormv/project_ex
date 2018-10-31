@@ -153,15 +153,19 @@ namespace Exhibition.View
 				if (select_visitor.Status == "registered")
 				{
 					addVisitorToFact(select_visitor);
-					cb_code.Text = "";
-					cb_code.BackColor = Color.White;
-					initialDataGread();
+	//				cb_code.Text = "";
+	//				cb_code.BackColor = Color.White;
+	//				initialDataGread();
 				}
 				else
 				{
 					СhoiceForm c_form = new СhoiceForm(this, select_visitor);
 					c_form.ShowDialog();
 				}
+
+				cb_code.Text = "";
+				cb_code.BackColor = Color.White;
+				initialDataGread();
 			}
 
 			if (e.KeyCode == Keys.Down && isSelectAndPrint == true)
@@ -205,30 +209,30 @@ namespace Exhibition.View
 		public void addVisitorToFact(ExhibitionVisitor select_visitor, string status)
 		{
 			this.select_visitor = select_visitor;
-			BizVisitor b_select_visitor = new BizVisitor();
-			b_select_visitor.vId = select_visitor.Id;
-			b_select_visitor.vLastName = select_visitor.LastName;
-			b_select_visitor.vFirstName = select_visitor.FirstName;
-			b_select_visitor.vPathronim = select_visitor.Pathronim;
-			b_select_visitor.vConpany = context.Companies.Where(s => 
-			s.Id == select_visitor.CompanyId).Select(v => v.Name).FirstOrDefault();
-			b_select_visitor.vPosition = context.Positions.Where(s =>
-			s.Id == select_visitor.PositionId).Select(v => v.Name).FirstOrDefault();
-			b_select_visitor.vDescription = context.Descriptions.Where(s =>
-			s.Id == select_visitor.DescriptionId).Select(v => v.Name).FirstOrDefault();
-			b_select_visitor.vPhoneMobile = select_visitor.PhoneNumber;
-			b_select_visitor.vPhoneWork = select_visitor.WorkPhone;
-			b_select_visitor.vEmail = select_visitor.Email;
-			b_select_visitor.vRegDate = select_visitor.DateCreated.ToString();
-			b_select_visitor.vExhibit = context.Exhibits.Where(s =>
-			s.Id == select_visitor.ExhibitId).Select(v => v.Name).FirstOrDefault();
-			b_select_visitor.vRaport = context.Raports.Where(s =>
-			s.Id == select_visitor.RaportId).Select(v => v.Name).FirstOrDefault();
-			b_select_visitor.vCity = context.Cities.Where(s =>
-			s.Id == select_visitor.CityId).Select(v => v.Name).FirstOrDefault();
-			if (!bs.Contains(b_select_visitor))
+			if (context.ExhibitionVisitors.Where(s => s.BarCode == select_visitor.BarCode).Select(v => v).Count() == 0)
 			{
-				bs.Add(b_select_visitor);
+				BizVisitor b_select_visitor = new BizVisitor();
+				b_select_visitor.vId = select_visitor.Id;
+				b_select_visitor.vLastName = select_visitor.LastName;
+				b_select_visitor.vFirstName = select_visitor.FirstName;
+				b_select_visitor.vPathronim = select_visitor.Pathronim;
+				b_select_visitor.vConpany = context.Companies.Where(s =>
+				s.Id == select_visitor.CompanyId).Select(v => v.Name).FirstOrDefault();
+				b_select_visitor.vPosition = context.Positions.Where(s =>
+				s.Id == select_visitor.PositionId).Select(v => v.Name).FirstOrDefault();
+				b_select_visitor.vDescription = context.Descriptions.Where(s =>
+				s.Id == select_visitor.DescriptionId).Select(v => v.Name).FirstOrDefault();
+				b_select_visitor.vPhoneMobile = select_visitor.PhoneNumber;
+				b_select_visitor.vPhoneWork = select_visitor.WorkPhone;
+				b_select_visitor.vEmail = select_visitor.Email;
+				b_select_visitor.vRegDate = select_visitor.DateCreated.ToString();
+				b_select_visitor.vExhibit = context.Exhibits.Where(s =>
+				s.Id == select_visitor.ExhibitId).Select(v => v.Name).FirstOrDefault();
+				b_select_visitor.vRaport = context.Raports.Where(s =>
+				s.Id == select_visitor.RaportId).Select(v => v.Name).FirstOrDefault();
+				b_select_visitor.vCity = context.Cities.Where(s =>
+				s.Id == select_visitor.CityId).Select(v => v.Name).FirstOrDefault();
+				bs.Add(b_select_visitor);			
 			}
 			context.ExhibitionVisitors.AddOrUpdate(select_visitor);
 			context.SaveChanges();
@@ -237,6 +241,8 @@ namespace Exhibition.View
 			var count = context.ExhibitionVisitors.Where(v => v.Status != "registered").Select(s => s).Count() - 1;
 			lb_count.Text = count.ToString();
 			pb_color.BackColor = col;
+			//	this.dgv_fakt_visitor.Refresh();
+			initialDataGread();
 			printVisitor();
 		}
 
