@@ -29,7 +29,8 @@ namespace Exhibition.View
 		{
 			select_visitor = new ExhibitionVisitor();
 			InitializeComponent();
-			initialDataGread();
+			List<PharmaVisitor> dgv_collection = null;
+			initialDataGread(dgv_collection);
 			ss = new SettingStorage();
 			templForm = new TemplateForm(ss);
 			var count = context.ExhibitionVisitors.Where(v => v.Status != "registered").Select(s => s).Count() - 1;
@@ -38,12 +39,11 @@ namespace Exhibition.View
 			
 		}
 
-		private void initialDataGread()
+		private void initialDataGread(List<BizVisitor> dgv_collection)
 		{
-			List<BizVisitor> dgv_collection = null;
 			if (context.ExhibitionVisitors.Select(s => s).Count() != 0) dgv_collection = context.ExhibitionVisitors.Where(e =>
 				 (e.Status == "fact" || e.Status == "newfact" || e.Status == "factcorrect" || e.Status == "newfactcorrect")).
-				 Select(s=> new BizVisitor
+				 Select(s => new BizVisitor
 				 {
 					 vId = s.Id,
 					 vLastName = s.LastName,
@@ -60,6 +60,7 @@ namespace Exhibition.View
 					 vRaport = s.Raport.Name,
 					 vCity = s.City.Name,
 					 vBarcode = s.BarCode
+
 				 }).ToList();
 			bs.DataSource = dgv_collection;
 			dgv_fakt_visitor.DataSource = bs;
@@ -91,6 +92,56 @@ namespace Exhibition.View
 			dgv_fakt_visitor.Columns["vCity"].HeaderText = "Город";
 			dgv_fakt_visitor.Columns["vCity"].Width = 80;
 		}
+
+
+
+		private void initialDataGread(List<PharmaVisitor> dgv_collection)
+		{
+			if (context.ExhibitionVisitors.Select(s => s).Count() != 0) dgv_collection = context.ExhibitionVisitors.Where(e =>
+				 (e.Status == "fact" || e.Status == "newfact" || e.Status == "factcorrect" || e.Status == "newfactcorrect")).
+				 Select(s => new PharmaVisitor
+				 {
+					 pId = s.Id,
+					 pSurName = s.LastName,
+					 pForName = s.FirstName,
+					 pConpany = s.Company.Name,
+					 pJobTitle = s.Position.Name,
+					 pCustomerNo = s.Email,
+					 pRowNumber = s.PhoneNumber,
+					 pBarcode = s.BarCode,
+					 pDescription = s.Description.Name,
+					 pRegDate = s.DateCreated.ToString(),
+					 pPaymentStatus = s.Payment_Status,
+					 pPaymentComment = s.Payment_Status_Comment
+				 }).ToList();
+			bs.DataSource = dgv_collection;
+			dgv_fakt_visitor.DataSource = bs;
+			dgv_fakt_visitor.Columns["pId"].Visible = false;
+			dgv_fakt_visitor.Columns["pSurName"].HeaderText = "SurName";
+			dgv_fakt_visitor.Columns["pSurName"].Width = 120;
+			dgv_fakt_visitor.Columns["pForName"].HeaderText = "ForName";
+			dgv_fakt_visitor.Columns["pForName"].Width = 120;
+			dgv_fakt_visitor.Columns["pConpany"].HeaderText = "Conpany";
+			dgv_fakt_visitor.Columns["pConpany"].Width = 150;
+			dgv_fakt_visitor.Columns["pJobTitle"].HeaderText = "JobTitle";
+			dgv_fakt_visitor.Columns["pJobTitle"].Width = 150;
+			dgv_fakt_visitor.Columns["pDescription"].HeaderText = "Description";
+			dgv_fakt_visitor.Columns["pDescription"].Width = 150;
+			dgv_fakt_visitor.Columns["pRowNumber"].HeaderText = "pRowNumber";
+			dgv_fakt_visitor.Columns["pRowNumber"].Width = 100;
+			dgv_fakt_visitor.Columns["pBarcode"].HeaderText = "Barcode";
+			dgv_fakt_visitor.Columns["pBarcode"].Width = 100;
+			dgv_fakt_visitor.Columns["pCustomerNo"].HeaderText = "CustomerNo";
+			dgv_fakt_visitor.Columns["pCustomerNo"].Width = 150;
+			dgv_fakt_visitor.Columns["pRegDate"].HeaderText = "RegDate";
+			dgv_fakt_visitor.Columns["pRegDate"].Width = 150;
+			dgv_fakt_visitor.Columns["pPaymentStatus"].HeaderText = "PaymentStatus";
+			dgv_fakt_visitor.Columns["pPaymentStatus"].Width = 80;
+			dgv_fakt_visitor.Columns["pPaymentComment"].HeaderText = "pPaymentComment";
+			dgv_fakt_visitor.Columns["pPaymentComment"].Width = 80;
+		}
+
+
 
 		private void mi_planed_visitors_Click(object sender, EventArgs e)
 		{
@@ -179,7 +230,8 @@ namespace Exhibition.View
 
 				cb_code.Text = "";
 				cb_code.BackColor = Color.White;
-				initialDataGread();
+				List < PharmaVisitor > dgv = null;
+				initialDataGread(dgv);
 			}
 
 			if (e.KeyCode == Keys.Down && isSelectAndPrint == true)
@@ -192,25 +244,9 @@ namespace Exhibition.View
 		{
 			select_visitor.Status = "fact";
 			select_visitor.DateCreated = DateTime.Now;
-			BizVisitor b_select_visitor = new BizVisitor();
-			b_select_visitor.vId = select_visitor.Id;
-			b_select_visitor.vLastName = select_visitor.LastName;
-			b_select_visitor.vFirstName = select_visitor.FirstName;
-			b_select_visitor.vPathronim = select_visitor.Pathronim;
-			b_select_visitor.vConpany = context.Companies.Where(c => c.Id == select_visitor.CompanyId).Select(s => s.Name).FirstOrDefault();
-			b_select_visitor.vPosition = context.Positions.Where(p => p.Id == select_visitor.PositionId).Select(s => s.Name).FirstOrDefault();
-			b_select_visitor.vDescription = context.Descriptions.Where(d => d.Id == select_visitor.DescriptionId).Select(s => s.Name).FirstOrDefault();
-			b_select_visitor.vPhoneMobile = select_visitor.PhoneNumber;
-			b_select_visitor.vPhoneWork = select_visitor.WorkPhone;
-			b_select_visitor.vEmail = select_visitor.Email;
-			b_select_visitor.vRegDate = select_visitor.DateCreated.ToString();
-			b_select_visitor.vExhibit = context.Exhibits.Where(e => e.Id == select_visitor.ExhibitId).Select(s => s.Name).FirstOrDefault();
-			b_select_visitor.vRaport = context.Raports.Where(r => r.Id == select_visitor.RaportId).Select(s => s.Name).FirstOrDefault();
-			b_select_visitor.vCity = context.Cities.Where(c => c.Id == select_visitor.CityId).Select(s => s.Name).FirstOrDefault();
-			b_select_visitor.vStatus = select_visitor.Status;
-			b_select_visitor.vBarcode = select_visitor.BarCode;
-            
-			bs.Add(b_select_visitor);
+
+			bs.Add(new PharmaVisitor(select_visitor, context));
+	//		bs.Add(new BizVisitor(select_visitor, context));
 			context.SaveChanges();
 			var cl = context.Descriptions.Where(d => d.Id == select_visitor.DescriptionId).Select(s => s.Color).FirstOrDefault();
 			var col = Color.FromName(cl);
@@ -235,24 +271,8 @@ namespace Exhibition.View
 			this.select_visitor = select_visitor;
 			if (context.ExhibitionVisitors.Where(s => s.BarCode == select_visitor.BarCode).Select(v => v).Count() == 0)
 			{
-				BizVisitor b_select_visitor = new BizVisitor();
-				b_select_visitor.vId = select_visitor.Id;
-				b_select_visitor.vLastName = select_visitor.LastName;
-				b_select_visitor.vFirstName = select_visitor.FirstName;
-				b_select_visitor.vPathronim = select_visitor.Pathronim;
-				b_select_visitor.vConpany = context.Companies.Where(s =>s.Id == select_visitor.CompanyId).Select(v => v.Name).FirstOrDefault();
-				b_select_visitor.vPosition = context.Positions.Where(s =>s.Id == select_visitor.PositionId).Select(v => v.Name).FirstOrDefault();
-				b_select_visitor.vDescription = context.Descriptions.Where(s =>s.Id == select_visitor.DescriptionId).Select(v => v.Name).FirstOrDefault();
-				b_select_visitor.vPhoneMobile = select_visitor.PhoneNumber;
-				b_select_visitor.vPhoneWork = select_visitor.WorkPhone;
-				b_select_visitor.vEmail = select_visitor.Email;
-				b_select_visitor.vRegDate = select_visitor.DateCreated.ToString();
-				b_select_visitor.vExhibit = context.Exhibits.Where(s =>s.Id == select_visitor.ExhibitId).Select(v => v.Name).FirstOrDefault();
-				b_select_visitor.vRaport = context.Raports.Where(s =>s.Id == select_visitor.RaportId).Select(v => v.Name).FirstOrDefault();
-				b_select_visitor.vCity = context.Cities.Where(s =>s.Id == select_visitor.CityId).Select(v => v.Name).FirstOrDefault();
-				b_select_visitor.vStatus = status;
-				b_select_visitor.vBarcode = select_visitor.BarCode;
-				bs.Add(b_select_visitor);			
+				bs.Add(new PharmaVisitor(select_visitor, context));
+			//	bs.Add(new BizVisitor(select_visitor, context));
 			}
 			context.ExhibitionVisitors.AddOrUpdate(select_visitor);
 			context.SaveChanges();
@@ -272,7 +292,8 @@ namespace Exhibition.View
 			lbl_payment_status.Text = select_visitor.Payment_Status;
 			lbl_payment_status.Visible = true;
 			//	this.dgv_fakt_visitor.Refresh();
-			initialDataGread();
+			List<PharmaVisitor> dgv = null;
+			initialDataGread(dgv);
 			printVisitor();
 		}
 
@@ -444,7 +465,8 @@ namespace Exhibition.View
 
 		private void dgv_fakt_visitor_DoubleClick(object sender, EventArgs e)
 		{
-			var cur_visitor = bs.Current as BizVisitor;
+			//			var cur_visitor = bs.Current as BizVisitor;
+			var cur_visitor = bs.Current as PharmaVisitor;
 			CreateVisitorForm cv_form = new CreateVisitorForm(this, cur_visitor);
 			cv_form.ShowDialog();
 			this.Refresh();

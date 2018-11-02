@@ -63,6 +63,41 @@ namespace Exhibition.Vew
 	///		this.Refresh();
 		}
 
+
+
+		public CreateVisitorForm(GeneralForm f, PharmaVisitor v)
+		{
+			visitor = new ExhibitionVisitor();
+			InitializeComponent();
+			visitor = context.ExhibitionVisitors.Where(vi => vi.BarCode == v.pBarcode).Select(s => s).FirstOrDefault();
+			cmb_exhebition.DataSource = context.Exhibits.Where(vi => vi.Name != "none").Select(s => s).ToList();
+			cmb_exhebition.DisplayMember = "Name";
+			cmb_exhebition.ValueMember = "Id";
+			need_print = false;
+			create_form = f;
+			txb_lname.Text = v.pSurName;
+			txb_fname.Text = v.pForName;
+			txb_pathronim.Text = " ";
+			txb_company.Text = v.pConpany;
+			txb_position.Text = v.pJobTitle;
+			txb_email.Text = v.pRowNumber;
+			cb_description.DataSource = context.Descriptions.Select(s => s).ToList();
+			cb_description.DisplayMember = "Name";
+			cb_description.ValueMember = "Id";
+			cb_description.Text = v.pDescription;
+			txb_city.Text = " ";
+			txb_raport.Text = " ";
+			txb_phone_work.Text = " ";
+			txb_phone_mobile.Text = v.pCustomerNo;
+			if (v.pStatus == "fact") v.pStatus = "factcorrect";
+			if (v.pStatus == "newfact") v.pStatus = "newfactcorrect";
+			//		context.SaveChanges();
+			///		this.Refresh();
+		}
+
+
+
+
 		private void btn_save_visitor_Click(object sender, EventArgs e)
 		{
 			if (txb_fname.Text != "" && txb_lname.Text != "" && txb_company.Text != "" && txb_position.Text != "" && txb_email.Text != "")
