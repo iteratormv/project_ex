@@ -32,8 +32,8 @@ namespace Exhibition.Data.BizLayer
 			pForName = select_visitor.FirstName;
 			pConpany = select_visitor.Company.Name;
 			pJobTitle = select_visitor.Position.Name;
-			pCustomerNo = select_visitor.Email;
-			pRowNumber = select_visitor.PhoneNumber;
+			pCustomerNo = select_visitor.PhoneNumber;
+			pRowNumber = select_visitor.Email;
 			pBarcode = select_visitor.BarCode;
 			pDescription = select_visitor.Description.Name;
 			pRegDate = select_visitor.DateCreated.ToString();
@@ -49,8 +49,8 @@ namespace Exhibition.Data.BizLayer
 			pForName = select_visitor.FirstName;
 			pConpany = context.Companies.Where(c => c.Id == select_visitor.CompanyId).Select(s => s.Name).FirstOrDefault();
 			pJobTitle = context.Positions.Where(p => p.Id == select_visitor.PositionId).Select(s => s.Name).FirstOrDefault();
-			pCustomerNo = select_visitor.Email;
-			pRowNumber = select_visitor.PhoneNumber;
+			pCustomerNo = select_visitor.PhoneNumber;
+			pRowNumber = select_visitor.Email;
 			pBarcode = select_visitor.BarCode;
 			pDescription = context.Descriptions.Where(d => d.Id == select_visitor.DescriptionId).Select(s => s.Name).FirstOrDefault();
 			pRegDate = select_visitor.DateCreated.ToString();

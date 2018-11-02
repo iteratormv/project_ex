@@ -106,13 +106,14 @@ namespace Exhibition.View
 					 pForName = s.FirstName,
 					 pConpany = s.Company.Name,
 					 pJobTitle = s.Position.Name,
-					 pCustomerNo = s.Email,
-					 pRowNumber = s.PhoneNumber,
+					 pCustomerNo = s.PhoneNumber,
+					 pRowNumber = s.Email,
 					 pBarcode = s.BarCode,
 					 pDescription = s.Description.Name,
 					 pRegDate = s.DateCreated.ToString(),
 					 pPaymentStatus = s.Payment_Status,
-					 pPaymentComment = s.Payment_Status_Comment
+					 pPaymentComment = s.Payment_Status_Comment,
+					 pStatus = s.Status
 				 }).ToList();
 			bs.DataSource = dgv_collection;
 			dgv_fakt_visitor.DataSource = bs;
@@ -127,7 +128,7 @@ namespace Exhibition.View
 			dgv_fakt_visitor.Columns["pJobTitle"].Width = 150;
 			dgv_fakt_visitor.Columns["pDescription"].HeaderText = "Description";
 			dgv_fakt_visitor.Columns["pDescription"].Width = 150;
-			dgv_fakt_visitor.Columns["pRowNumber"].HeaderText = "pRowNumber";
+			dgv_fakt_visitor.Columns["pRowNumber"].HeaderText = "RowNumber";
 			dgv_fakt_visitor.Columns["pRowNumber"].Width = 100;
 			dgv_fakt_visitor.Columns["pBarcode"].HeaderText = "Barcode";
 			dgv_fakt_visitor.Columns["pBarcode"].Width = 100;
@@ -137,8 +138,10 @@ namespace Exhibition.View
 			dgv_fakt_visitor.Columns["pRegDate"].Width = 150;
 			dgv_fakt_visitor.Columns["pPaymentStatus"].HeaderText = "PaymentStatus";
 			dgv_fakt_visitor.Columns["pPaymentStatus"].Width = 80;
-			dgv_fakt_visitor.Columns["pPaymentComment"].HeaderText = "pPaymentComment";
+			dgv_fakt_visitor.Columns["pPaymentComment"].HeaderText = "PaymentComment";
 			dgv_fakt_visitor.Columns["pPaymentComment"].Width = 80;
+			dgv_fakt_visitor.Columns["pStatus"].HeaderText = "Status";
+			dgv_fakt_visitor.Columns["pStatus"].Width = 80;
 		}
 
 
@@ -214,7 +217,7 @@ namespace Exhibition.View
 				var current_name = current_visitor[1];
 				var current_lname = current_visitor[0];
 				select_visitor = context.ExhibitionVisitors.Where
-				   (v => v.FirstName == current_name && v.LastName == current_lname).FirstOrDefault();
+				   (v => v.FirstName == current_name && v.LastName == current_lname || v.FirstName.Contains(current_name) && v.LastName.Contains(current_lname)).FirstOrDefault();
 				if (select_visitor.Status == "registered")
 				{
 					addVisitorToFact(select_visitor);
@@ -291,7 +294,6 @@ namespace Exhibition.View
 			lbl_payment_status.ForeColor = pcol;
 			lbl_payment_status.Text = select_visitor.Payment_Status;
 			lbl_payment_status.Visible = true;
-			//	this.dgv_fakt_visitor.Refresh();
 			List<PharmaVisitor> dgv = null;
 			initialDataGread(dgv);
 			printVisitor();
@@ -331,8 +333,8 @@ namespace Exhibition.View
 				Select(s => s).FirstOrDefault();
 
 			posYlname = (int)(height / 10);
-			posYcompany = (int)(height / 22 * 10);
-			posYposition = (int)(height / 14 * 10);
+			posYcompany = (int)(height / 14 * 10);
+			posYposition = (int)(height / 11 * 10);
 
 
             string print_first_name = select_visitor.FirstName;
@@ -458,7 +460,7 @@ namespace Exhibition.View
 
 		private void btn_create_visitior_Click(object sender, EventArgs e)
 		{
-			CreateVisitorForm cv_form = new CreateVisitorForm(this);
+			CreatePharmaVisitorForm cv_form = new CreatePharmaVisitorForm(this);
 			cv_form.ShowDialog();
 			this.Refresh();
 		}
@@ -467,7 +469,7 @@ namespace Exhibition.View
 		{
 			//			var cur_visitor = bs.Current as BizVisitor;
 			var cur_visitor = bs.Current as PharmaVisitor;
-			CreateVisitorForm cv_form = new CreateVisitorForm(this, cur_visitor);
+			CreatePharmaVisitorForm cv_form = new CreatePharmaVisitorForm(this, cur_visitor);
 			cv_form.ShowDialog();
 			this.Refresh();
 		}
@@ -506,8 +508,8 @@ namespace Exhibition.View
 		{
 			if (e.KeyCode == Keys.Enter)
 			{
-				var cur_visitor = bs.Current as BizVisitor;
-				CreateVisitorForm cv_form = new CreateVisitorForm(this, cur_visitor);
+				var cur_visitor = bs.Current as PharmaVisitor;
+				CreatePharmaVisitorForm cv_form = new CreatePharmaVisitorForm(this, cur_visitor);
 				cv_form.ShowDialog();
 				this.Refresh();
 			}
