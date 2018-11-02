@@ -230,6 +230,13 @@ namespace Exhibition.Data
                     visitor.DescriptionId = context.Descriptions.Where
                         (d => d.Name.Equals(e_discription)).Select(dd => dd.Id).FirstOrDefault();
                     visitor.BarCode = data[row, 7];
+
+					visitor.Payment_Status = data[row, 8];
+					visitor.Payment_Status_Comment = data[row, 9];
+					visitor.Source_Code = data[row, 10];
+					visitor.Event_Code = data[row, 11];
+					visitor.Event_Name = data[row, 12];
+
                     visitor.Status = "registered";
 
                     context.ExhibitionVisitors.Add(visitor);
@@ -306,6 +313,13 @@ namespace Exhibition.Data
 					visitor.DescriptionId = context.Descriptions.Where
 						(d => d.Name.Equals(e_discription)).Select(dd => dd.Id).FirstOrDefault();
 					visitor.BarCode = data[row, 7];
+
+					visitor.Payment_Status = data[row, 8];
+					visitor.Payment_Status_Comment = data[row, 9];
+					visitor.Source_Code = data[row, 10];
+					visitor.Event_Code = data[row, 11];
+					visitor.Event_Name = data[row, 12];
+
 					visitor.Status = "registered";
 
 					context.ExhibitionVisitors.Add(visitor);
@@ -405,6 +419,12 @@ namespace Exhibition.Data
 					.Select(ra => ra.Id).FirstOrDefault();
 
 				visitor.Status = "none";
+
+				visitor.Payment_Status = "none";
+				visitor.Payment_Status_Comment = "none";
+				visitor.Source_Code = "none";
+				visitor.Event_Code = "none";
+				visitor.Event_Name = "none";
 
 				context.ExhibitionVisitors.Add(visitor);
 				context.SaveChanges();

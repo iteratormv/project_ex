@@ -98,13 +98,17 @@ namespace Exhibition.Vew
 			}
 		}
 
-		private int getLastBarcode()
+		private long getLastBarcode()
 		{
 			var barcodes_s = context.ExhibitionVisitors.Select(v =>v.BarCode).ToList();
-			List<int> barcodes_snn = new List<int>();
+			List<long> barcodes_snn = new List<long>();
 			foreach (string i in barcodes_s)
 			{
-				if (i != null&& i!="none") barcodes_snn.Add(int.Parse(i));
+				try
+				{
+					if (i != null && i != "none") barcodes_snn.Add(long.Parse(i));
+				}
+				catch { }
 			}
 			var last_barcode = barcodes_snn.Max();
 			return (last_barcode + 1);

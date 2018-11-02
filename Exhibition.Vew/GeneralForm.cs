@@ -34,6 +34,8 @@ namespace Exhibition.View
 			templForm = new TemplateForm(ss);
 			var count = context.ExhibitionVisitors.Where(v => v.Status != "registered").Select(s => s).Count() - 1;
 			lb_count.Text = count.ToString();
+			lbl_payment_status.Visible = false;
+			
 		}
 
 		private void initialDataGread()
@@ -114,7 +116,7 @@ namespace Exhibition.View
         }
 
 		private void cb_code_TextChanged(object sender, EventArgs e)
-		{
+	{
 			if (cb_code.Text.Length <= 3) cb_code.BackColor = Color.White;
 			else if (cb_code.Text.Length > 3)
 			{
@@ -142,8 +144,20 @@ namespace Exhibition.View
 
 		private void cb_code_KeyDown(object sender, KeyEventArgs e)
 		{
+			
+			if (e.KeyCode == Keys.Enter )
+			{
+				var cs = context.ExhibitionVisitors.Where(vi => vi.BarCode == cb_code.Text).Select(s => s);
+				if (cs.Count()>0)
+				{
+					select_visitor = cs.FirstOrDefault();
+					addVisitorToFact(select_visitor, "fact");
+				}
+			}
+
 			if (e.KeyCode == Keys.Enter && isSelectAndPrint == true)
 			{
+				
 				isSelectAndPrint = false;
 				var current_visitor = cb_code.Text.Split();
 				var current_name = current_visitor[1];
@@ -203,6 +217,16 @@ namespace Exhibition.View
 			var count = context.ExhibitionVisitors.Where(v => v.Status != "registered").Select(s => s).Count() - 1;
 			lb_count.Text = count.ToString();
 			pb_color.BackColor = col;
+
+			string pcl = "Black";
+			if (select_visitor.Payment_Status == "UNPAID") pcl = "Red";
+			if (select_visitor.Payment_Status == "PAID") pcl = "Green";
+			if (select_visitor.Payment_Status == "FOC") pcl = "Blue";
+			var pcol = Color.FromName(pcl);
+
+			lbl_payment_status.ForeColor = pcol;
+			lbl_payment_status.Text = select_visitor.Payment_Status;
+			lbl_payment_status.Visible = true;
 			printVisitor();
 		}
 
@@ -216,22 +240,18 @@ namespace Exhibition.View
 				b_select_visitor.vLastName = select_visitor.LastName;
 				b_select_visitor.vFirstName = select_visitor.FirstName;
 				b_select_visitor.vPathronim = select_visitor.Pathronim;
-				b_select_visitor.vConpany = context.Companies.Where(s =>
-				s.Id == select_visitor.CompanyId).Select(v => v.Name).FirstOrDefault();
-				b_select_visitor.vPosition = context.Positions.Where(s =>
-				s.Id == select_visitor.PositionId).Select(v => v.Name).FirstOrDefault();
-				b_select_visitor.vDescription = context.Descriptions.Where(s =>
-				s.Id == select_visitor.DescriptionId).Select(v => v.Name).FirstOrDefault();
+				b_select_visitor.vConpany = context.Companies.Where(s =>s.Id == select_visitor.CompanyId).Select(v => v.Name).FirstOrDefault();
+				b_select_visitor.vPosition = context.Positions.Where(s =>s.Id == select_visitor.PositionId).Select(v => v.Name).FirstOrDefault();
+				b_select_visitor.vDescription = context.Descriptions.Where(s =>s.Id == select_visitor.DescriptionId).Select(v => v.Name).FirstOrDefault();
 				b_select_visitor.vPhoneMobile = select_visitor.PhoneNumber;
 				b_select_visitor.vPhoneWork = select_visitor.WorkPhone;
 				b_select_visitor.vEmail = select_visitor.Email;
 				b_select_visitor.vRegDate = select_visitor.DateCreated.ToString();
-				b_select_visitor.vExhibit = context.Exhibits.Where(s =>
-				s.Id == select_visitor.ExhibitId).Select(v => v.Name).FirstOrDefault();
-				b_select_visitor.vRaport = context.Raports.Where(s =>
-				s.Id == select_visitor.RaportId).Select(v => v.Name).FirstOrDefault();
-				b_select_visitor.vCity = context.Cities.Where(s =>
-				s.Id == select_visitor.CityId).Select(v => v.Name).FirstOrDefault();
+				b_select_visitor.vExhibit = context.Exhibits.Where(s =>s.Id == select_visitor.ExhibitId).Select(v => v.Name).FirstOrDefault();
+				b_select_visitor.vRaport = context.Raports.Where(s =>s.Id == select_visitor.RaportId).Select(v => v.Name).FirstOrDefault();
+				b_select_visitor.vCity = context.Cities.Where(s =>s.Id == select_visitor.CityId).Select(v => v.Name).FirstOrDefault();
+				b_select_visitor.vStatus = status;
+				b_select_visitor.vBarcode = select_visitor.BarCode;
 				bs.Add(b_select_visitor);			
 			}
 			context.ExhibitionVisitors.AddOrUpdate(select_visitor);
@@ -241,6 +261,16 @@ namespace Exhibition.View
 			var count = context.ExhibitionVisitors.Where(v => v.Status != "registered").Select(s => s).Count() - 1;
 			lb_count.Text = count.ToString();
 			pb_color.BackColor = col;
+
+			string pcl = "Black";
+			if (select_visitor.Payment_Status == "UNPAID") pcl = "Red";
+			if (select_visitor.Payment_Status == "PAID") pcl = "Green";
+			if (select_visitor.Payment_Status == "FOC") pcl = "Blue";
+			var pcol = Color.FromName(pcl);
+
+			lbl_payment_status.ForeColor = pcol;
+			lbl_payment_status.Text = select_visitor.Payment_Status;
+			lbl_payment_status.Visible = true;
 			//	this.dgv_fakt_visitor.Refresh();
 			initialDataGread();
 			printVisitor();

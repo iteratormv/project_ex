@@ -20,6 +20,11 @@ namespace Exhibition.Data.DataModel
 		public string Status { get; set; }
 		public string WorkPhone { get; set; }
 		public string Pathronim { get; set; }
+		public string Payment_Status { get; set; }
+		public string Payment_Status_Comment { get; set; }
+		public string Source_Code { get; set; }
+		public string Event_Code { get; set; }
+		public string Event_Name { get; set; }
 		public DateTime? DateCreated { get; set; }
 
 		public int CityId { get; set; }
