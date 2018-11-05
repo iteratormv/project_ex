@@ -205,7 +205,8 @@ namespace Exhibition.View
 				if (cs.Count()>0)
 				{
 					select_visitor = cs.FirstOrDefault();
-					addVisitorToFact(select_visitor, "fact");
+					select_visitor.Status = "fact";
+					addVisitorToFact(select_visitor);
 				}
 			}
 
@@ -231,7 +232,7 @@ namespace Exhibition.View
 					c_form.ShowDialog();
 				}
 
-				cb_code.Text = "";
+				 cb_code.Text = "";
 				cb_code.BackColor = Color.White;
 				List < PharmaVisitor > dgv = null;
 				initialDataGread(dgv);
@@ -266,6 +267,8 @@ namespace Exhibition.View
 			lbl_payment_status.ForeColor = pcol;
 			lbl_payment_status.Text = select_visitor.Payment_Status;
 			lbl_payment_status.Visible = true;
+			List<PharmaVisitor> dgv = null;
+			initialDataGread(dgv);
 			printVisitor();
 		}
 

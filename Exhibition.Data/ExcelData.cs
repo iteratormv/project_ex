@@ -235,7 +235,7 @@ namespace Exhibition.Data
 					visitor.Payment_Status_Comment = data[row, 9];
 					visitor.Source_Code = data[row, 10];
 					visitor.Event_Code = data[row, 11];
-					visitor.Event_Name = data[row, 12];
+	//				visitor.Event_Name = data[row, 12];
 
                     visitor.Status = "registered";
 
