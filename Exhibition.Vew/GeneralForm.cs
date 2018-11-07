@@ -93,8 +93,6 @@ namespace Exhibition.View
 			dgv_fakt_visitor.Columns["vCity"].Width = 80;
 		}
 
-
-
 		private void initialDataGread(List<PharmaVisitor> dgv_collection)
 		{
 			if (context.ExhibitionVisitors.Select(s => s).Count() != 0) dgv_collection = context.ExhibitionVisitors.Where(e =>
@@ -143,8 +141,6 @@ namespace Exhibition.View
 			dgv_fakt_visitor.Columns["pStatus"].HeaderText = "Status";
 			dgv_fakt_visitor.Columns["pStatus"].Width = 80;
 		}
-
-
 
 		private void mi_planed_visitors_Click(object sender, EventArgs e)
 		{
@@ -479,7 +475,7 @@ namespace Exhibition.View
 
 		private void зарегистрированныеПосетилеиToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			RaportsForm pvform = new RaportsForm(1);
+			RaportsForm pvform = new RaportsForm(1, this);
 			pvform.ShowDialog();
 		}
 

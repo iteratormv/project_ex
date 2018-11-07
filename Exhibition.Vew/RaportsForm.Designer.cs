@@ -34,6 +34,7 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.lbl_count = new System.Windows.Forms.Label();
 			this.progressBar1 = new System.Windows.Forms.ProgressBar();
+			this.btn_print = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.dgv_visitors)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -91,11 +92,22 @@
 			this.progressBar1.Size = new System.Drawing.Size(211, 23);
 			this.progressBar1.TabIndex = 6;
 			// 
+			// btn_print
+			// 
+			this.btn_print.Location = new System.Drawing.Point(822, 43);
+			this.btn_print.Name = "btn_print";
+			this.btn_print.Size = new System.Drawing.Size(211, 28);
+			this.btn_print.TabIndex = 7;
+			this.btn_print.Text = "Печать этикеток";
+			this.btn_print.UseVisualStyleBackColor = true;
+			this.btn_print.Click += new System.EventHandler(this.btn_print_Click);
+			// 
 			// RaportsForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(800, 482);
+			this.ClientSize = new System.Drawing.Size(1145, 482);
+			this.Controls.Add(this.btn_print);
 			this.Controls.Add(this.progressBar1);
 			this.Controls.Add(this.lbl_count);
 			this.Controls.Add(this.label1);
@@ -120,5 +132,6 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label lbl_count;
 		private System.Windows.Forms.ProgressBar progressBar1;
+		private System.Windows.Forms.Button btn_print;
 	}
 }
